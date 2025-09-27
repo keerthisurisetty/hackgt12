@@ -1,18 +1,32 @@
-# Environment variables# Environment variables
+# Environment variables# Environment variables# Environment variables
+
+.env
 
 .env.env
 
+# Node modules
+
+node_modules/
 
 
-# Node modules# Node modules
+
+# Logs# Node modules# Node modules
+
+*.log
 
 node_modules/node_modules/
 
+# Mac
+
+.DS_Store
 
 
-# Logs# Logs
 
-*.log*.log
+# IDE# Logs# Logs
+
+.vscode/
+
+.idea/*.log*.log
 
 
 
