@@ -17,11 +17,18 @@
         <div class="container">
             <div class="nav-brand">
                 <h1>🏥 Clinic Financial Resilience Platform</h1>
-                <p class="tagline">Empower your clinic with cyber-financial resilience</p>
+                <p class="tagline" id="clinic-tagline">Empower your clinic with cyber-financial resilience</p>
             </div>
-            <div class="status-indicator">
-                <div class="status-dot"></div>
-                <span id="ai-status">AI Assistant Ready</span>
+            <div class="header-actions">
+                <div class="clinic-info" id="clinic-info" style="display: none;">
+                    <span class="clinic-name" id="clinic-name"></span>
+                    <span class="clinic-type" id="clinic-type"></span>
+                </div>
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span id="ai-status">AI Assistant Ready</span>
+                </div>
+                <button class="btn-logout" id="logout-btn" onclick="logout()" style="display: none;">Logout</button>
             </div>
         </div>
     </header>
@@ -77,10 +84,10 @@
                     <div class="tab-content">
                         <div id="tools-before" class="tab-pane active">
                             <h3>Clinic Profile & Attack Details</h3>
-                            <p class="tab-subtitle">Tell us about your clinic and the financial impact you're facing</p>
+                            <p class="tab-subtitle">Configure your cyberattack scenario and recovery parameters</p>
                             
                             <div class="input-section">
-                                <div class="clinic-selection">
+                                <div class="clinic-selection" id="clinic-selection" style="display: none;">
                                     <h4>Select Your Clinic Type</h4>
                                     <div class="clinic-options">
                                         <div class="clinic-card" data-clinic="small" onclick="selectClinic('small')">
@@ -110,6 +117,34 @@
                                                     <span class="stat-label">Daily Costs</span>
                                                     <span class="stat-value">$2.1K</span>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="authenticated-clinic-info" id="authenticated-clinic-info">
+                                    <h4>Your Clinic Profile</h4>
+                                    <div class="clinic-profile-card">
+                                        <div class="profile-header">
+                                            <h5 id="profile-clinic-name">Clinic Name</h5>
+                                            <span class="profile-type" id="profile-clinic-type">Practice Type</span>
+                                        </div>
+                                        <div class="profile-stats">
+                                            <div class="stat">
+                                                <span class="stat-label">Annual Revenue</span>
+                                                <span class="stat-value" id="profile-annual-revenue">$0</span>
+                                            </div>
+                                            <div class="stat">
+                                                <span class="stat-label">Daily Operating Costs</span>
+                                                <span class="stat-value" id="profile-daily-costs">$0</span>
+                                            </div>
+                                            <div class="stat">
+                                                <span class="stat-label">Monthly Profit</span>
+                                                <span class="stat-value" id="profile-monthly-profit">$0</span>
+                                            </div>
+                                            <div class="stat">
+                                                <span class="stat-label">Liquid Assets</span>
+                                                <span class="stat-value" id="profile-liquid-assets">$0</span>
                                             </div>
                                         </div>
                                     </div>
@@ -187,6 +222,7 @@
         let currentClinic = null;
         let currentRecoveryPlan = null;
         let recoveryChart = null;
+        let currentUser = null;
 
         // Clinic Data Models - Focused on small practices
         const clinicData = {
@@ -239,9 +275,62 @@
 
         // Initialize app
         window.addEventListener('DOMContentLoaded', function() {
+            checkAuthentication();
             updateStatusIndicator();
             displayBeforeFinancials();
         });
+
+        // Authentication functions
+        function checkAuthentication() {
+            const user = localStorage.getItem('currentUser');
+            if (!user) {
+                // Redirect to login if not authenticated
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            currentUser = JSON.parse(user);
+            displayClinicInfo();
+            loadClinicData();
+        }
+
+        function displayClinicInfo() {
+            if (currentUser) {
+                document.getElementById('clinic-tagline').textContent = `Welcome back, ${currentUser.clinicName}`;
+                document.getElementById('clinic-name').textContent = currentUser.clinicName;
+                document.getElementById('clinic-type').textContent = currentUser.clinicData.name;
+                document.getElementById('clinic-info').style.display = 'flex';
+                document.getElementById('logout-btn').style.display = 'block';
+            }
+        }
+
+        function loadClinicData() {
+            if (currentUser && currentUser.clinicData) {
+                // Use the clinic data from the authenticated user
+                currentClinic = currentUser.clinicData;
+                
+                // Hide clinic selection and show authenticated clinic info
+                document.getElementById('clinic-selection').style.display = 'none';
+                document.getElementById('authenticated-clinic-info').style.display = 'block';
+                
+                // Populate clinic profile
+                document.getElementById('profile-clinic-name').textContent = currentUser.clinicName;
+                document.getElementById('profile-clinic-type').textContent = currentUser.clinicData.name;
+                document.getElementById('profile-annual-revenue').textContent = `$${(currentUser.clinicData.annualRevenue / 1000).toFixed(0)}K`;
+                document.getElementById('profile-daily-costs').textContent = `$${currentUser.clinicData.dailyOperatingCosts.toLocaleString()}`;
+                document.getElementById('profile-monthly-profit').textContent = `$${currentUser.clinicData.monthlyProfit.toLocaleString()}`;
+                document.getElementById('profile-liquid-assets').textContent = `$${currentUser.clinicData.liquidAssets.toLocaleString()}`;
+                
+                // Update the clinic selection to match the user's clinic type (for internal logic)
+                const clinicId = currentUser.clinicType === 'solo' ? 'small' : 'medium';
+                selectClinic(clinicId);
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'login.html';
+        }
 
         // Tab switching functionality
         function switchTab(section, tab) {
@@ -272,32 +361,65 @@
         function displayBeforeFinancials() {
             const container = document.getElementById('before-metrics');
             
-            const metrics = [
-                {
-                    title: 'Monthly Revenue',
-                    value: '$42K',
-                    change: 'Typical operations',
-                    type: 'success'
-                },
-                {
-                    title: 'Monthly Expenses',
-                    value: '$38.5K',
-                    change: 'Normal overhead',
-                    type: 'neutral'
-                },
-                {
-                    title: 'Monthly Profit',
-                    value: '$9.2K',
-                    change: 'Healthy margin',
-                    type: 'success'
-                },
-                {
-                    title: 'Cash Reserves',
-                    value: '$85K',
-                    change: '2+ months operating',
-                    type: 'success'
-                }
-            ];
+            // Use authenticated user's data if available, otherwise use defaults
+            let metrics;
+            if (currentUser && currentUser.clinicData) {
+                const clinic = currentUser.clinicData;
+                metrics = [
+                    {
+                        title: 'Monthly Revenue',
+                        value: `$${(clinic.monthlyRevenue / 1000).toFixed(0)}K`,
+                        change: 'Typical operations',
+                        type: 'success'
+                    },
+                    {
+                        title: 'Monthly Expenses',
+                        value: `$${(clinic.monthlyExpenses / 1000).toFixed(0)}K`,
+                        change: 'Normal overhead',
+                        type: 'neutral'
+                    },
+                    {
+                        title: 'Monthly Profit',
+                        value: `$${(clinic.monthlyProfit / 1000).toFixed(0)}K`,
+                        change: 'Healthy margin',
+                        type: 'success'
+                    },
+                    {
+                        title: 'Cash Reserves',
+                        value: `$${(clinic.liquidAssets / 1000).toFixed(0)}K`,
+                        change: '2+ months operating',
+                        type: 'success'
+                    }
+                ];
+            } else {
+                // Default metrics for demo
+                metrics = [
+                    {
+                        title: 'Monthly Revenue',
+                        value: '$42K',
+                        change: 'Typical operations',
+                        type: 'success'
+                    },
+                    {
+                        title: 'Monthly Expenses',
+                        value: '$38.5K',
+                        change: 'Normal overhead',
+                        type: 'neutral'
+                    },
+                    {
+                        title: 'Monthly Profit',
+                        value: '$9.2K',
+                        change: 'Healthy margin',
+                        type: 'success'
+                    },
+                    {
+                        title: 'Cash Reserves',
+                        value: '$85K',
+                        change: '2+ months operating',
+                        type: 'success'
+                    }
+                ];
+            }
             
             container.innerHTML = metrics.map(metric => `
                 <div class="metric-card ${metric.type}">

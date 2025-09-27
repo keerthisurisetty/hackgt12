@@ -61,6 +61,47 @@ body {
     align-items: center;
 }
 
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.clinic-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-right: 1rem;
+}
+
+.clinic-name {
+    font-weight: 600;
+    color: var(--dark);
+    font-size: 0.9rem;
+}
+
+.clinic-type {
+    font-size: 0.8rem;
+    color: var(--neutral-gray);
+}
+
+.btn-logout {
+    background: var(--danger-red);
+    color: var(--white);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--tab-border-radius);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+    background: #c82333;
+    transform: translateY(-1px);
+}
+
 .nav-brand h1 {
     color: var(--primary-blue);
     font-size: 1.75rem;
@@ -250,6 +291,57 @@ body {
 /* Clinic Selection */
 .clinic-selection {
     margin-bottom: 2rem;
+}
+
+/* Authenticated Clinic Info */
+.authenticated-clinic-info {
+    margin-bottom: 2rem;
+}
+
+.authenticated-clinic-info h4 {
+    color: var(--dark);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.clinic-profile-card {
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.05), rgba(0, 168, 107, 0.05));
+    border: 2px solid var(--primary-blue);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 102, 204, 0.1);
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.profile-header h5 {
+    color: var(--dark);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.profile-type {
+    background: var(--primary-blue);
+    color: var(--white);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--tab-border-radius);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.profile-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
 }
 
 .clinic-selection h4 {
