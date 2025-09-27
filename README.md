@@ -5,35 +5,40 @@ An AI-powered platform helping hospitals recover financially from cyberattacks t
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - A modern web browser
 - OpenAI API key (for AI recommendations - optional)
 
 ### Local Setup
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/keerthisurisetty/hackgt12.git
    cd hackgt12
    ```
 
 2. **Configure OpenAI API Key (Optional)**
-   
+
    **Option A: Using .env file (Recommended)**
+
    ```bash
    cp .env.example .env
    # Edit .env and add your OpenAI API key
    ```
 
    **Option B: Direct configuration**
+
    - Open `hospital-simulator.html`
    - Find the `CONFIG` object around line 420
    - Replace `'YOUR_OPENAI_API_KEY_HERE'` with your actual OpenAI API key
 
 3. **Run the simulator**
+
    ```bash
    # Start a simple HTTP server
    python3 -m http.server 8080
-   
+
    # Open in browser
    open http://localhost:8080/hospital-simulator.html
    ```
@@ -41,13 +46,16 @@ An AI-powered platform helping hospitals recover financially from cyberattacks t
 ## 🏥 Features
 
 ### Core Functionality
+
 - **Hospital Selection**: Choose between Rural General Hospital (150 beds) or Urban Medical Center (400 beds)
 - **Cyberattack Impact Assessment**: Configure attack scenarios with custom financial losses (default: $7M)
 - **6-Week Recovery Simulation**: Interactive timeline showing financial recovery phases
 - **AI-Powered Recommendations**: OpenAI-generated recovery strategies tailored to hospital profile
 
 ### Hospital Profiles
+
 - **Rural General Hospital**
+
   - 150 beds, $61M annual revenue
   - $190K daily operating costs
   - 26/100 cyber readiness score
@@ -60,6 +68,7 @@ An AI-powered platform helping hospitals recover financially from cyberattacks t
   - 99 days operating runway
 
 ### Technical Features
+
 - Single-file HTML solution (no server dependencies)
 - Chart.js visualizations for recovery timelines
 - Real-time financial impact calculations
@@ -77,6 +86,7 @@ An AI-powered platform helping hospitals recover financially from cyberattacks t
 ## 🛠 Development
 
 ### Project Structure
+
 ```
 hackgt12/
 ├── hospital-simulator.html    # Single-file application
@@ -87,6 +97,7 @@ hackgt12/
 ```
 
 ### Key Technologies
+
 - **Frontend**: HTML5, CSS3, JavaScript ES6+
 - **Visualization**: Chart.js
 - **AI**: OpenAI GPT-3.5-turbo API (optional)
@@ -99,6 +110,7 @@ hackgt12/
 **Problem Statement**: Helping hospitals recover from the financial strain of cyberattacks, which cost hospitals an average of $7 million and require 6+ weeks to fully recover from.
 
 **Solution**: AI-powered financial recovery simulation platform that provides:
+
 - Real-time impact assessment
 - Data-driven recovery planning
 - Personalized AI recommendations
@@ -116,4 +128,5 @@ hackgt12/
 This project was created for HackGT12 and is available for educational and demonstration purposes.
 
 ---
+
 Built with ❤️ for HackGT12 - Making healthcare more resilient against cyber threats.
