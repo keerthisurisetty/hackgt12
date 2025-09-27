@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Financial Resilience Platform</title>
+    
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="clinic-styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>🏥 Clinic Financial Resilience Platform</h1>
+                <p class="tagline">Empower your clinic with cyber-financial resilience</p>
+            </div>
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                <span id="ai-status">AI Assistant Ready</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- Financial Overview Section -->
+            <section class="card financial-overview">
+                <h2>Financial Impact Overview</h2>
+                <p class="section-description">Understand how a cyberattack would affect your clinic's finances</p>
+                
+                <div class="tab-container">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" onclick="switchTab('financial', 'before')">Before</button>
+                        <button class="tab-btn" onclick="switchTab('financial', 'after')">After</button>
+                    </div>
+                    
+                    <div class="tab-content">
+                        <div id="financial-before" class="tab-pane active">
+                            <h3>Typical Finances</h3>
+                            <p class="tab-subtitle">What your finances would look like had you not been hit with the cyberattack (aka: end goal of recovery)</p>
+                            
+                            <div class="metrics-grid" id="before-metrics">
+                                <!-- Before metrics will be populated here -->
+                            </div>
+                        </div>
+                        
+                        <div id="financial-after" class="tab-pane">
+                            <h3>Post-Cyberattack Impact</h3>
+                            <p class="tab-subtitle">Financial damage and recovery projections after a cyberattack</p>
+                            
+                            <div class="metrics-grid" id="after-metrics">
+                                <!-- After metrics will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Clinic Setup & Recovery Tools Section -->
+            <section class="card recovery-tools">
+                <h2>Recovery Analysis & Tools</h2>
+                <p class="section-description">Input your clinic details and get personalized recovery strategies</p>
+                
+                <div class="tab-container">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" onclick="switchTab('tools', 'before')">Setup</button>
+                        <button class="tab-btn" onclick="switchTab('tools', 'after')">Recovery Plan</button>
+                    </div>
+                    
+                    <div class="tab-content">
+                        <div id="tools-before" class="tab-pane active">
+                            <h3>Clinic Profile & Attack Details</h3>
+                            <p class="tab-subtitle">Tell us about your clinic and the financial impact you're facing</p>
+                            
+                            <div class="input-section">
+                                <div class="clinic-selection">
+                                    <h4>Select Your Clinic Type</h4>
+                                    <div class="clinic-options">
+                                        <div class="clinic-card" data-clinic="small" onclick="selectClinic('small')">
+                                            <h5>Solo Practice</h5>
+                                            <p>1 doctor, basic services</p>
+                                            <div class="clinic-stats">
+                                                <div class="stat">
+                                                    <span class="stat-label">Annual Revenue</span>
+                                                    <span class="stat-value">$300K</span>
+                                                </div>
+                                                <div class="stat">
+                                                    <span class="stat-label">Daily Costs</span>
+                                                    <span class="stat-value">$800</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="clinic-card" data-clinic="medium" onclick="selectClinic('medium')">
+                                            <h5>Small Group Practice</h5>
+                                            <p>2-3 doctors, expanded services</p>
+                                            <div class="clinic-stats">
+                                                <div class="stat">
+                                                    <span class="stat-label">Annual Revenue</span>
+                                                    <span class="stat-value">$750K</span>
+                                                </div>
+                                                <div class="stat">
+                                                    <span class="stat-label">Daily Costs</span>
+                                                    <span class="stat-value">$2.1K</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="impact-inputs">
+                                    <div class="input-group">
+                                        <label for="financial-loss">Financial Loss from Cyberattack</label>
+                                        <input type="number" id="financial-loss" value="50000" min="5000" step="5000">
+                                        <small>Estimated total financial impact (downtime, recovery, lost revenue)</small>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label for="target-recovery">Ideal Recovery Time</label>
+                                        <input type="number" id="target-recovery" value="4" min="1" max="12">
+                                        <small>How many weeks to get back to normal operations?</small>
+                                    </div>
+
+                                    <button class="btn-primary" onclick="generateRecoveryPlan()">Generate Recovery Plan</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="tools-after" class="tab-pane">
+                            <h3>Recovery Strategy & Timeline</h3>
+                            <p class="tab-subtitle">Your personalized path to financial recovery</p>
+                            
+                            <div class="recovery-content">
+                                <div class="recovery-stats" id="recovery-stats">
+                                    <!-- Generated stats will appear here -->
+                                </div>
+                                
+                                <div class="chart-section">
+                                    <div class="chart-container">
+                                        <canvas id="recovery-chart"></canvas>
+                                    </div>
+                                </div>
+                                
+                                <div class="ai-chat-section">
+                                    <h4>AI Recovery Assistant</h4>
+                                    <div class="chat-container" id="chat-container">
+                                        <div class="chat-message ai-message">
+                                            <div class="message-content">
+                                                <p>Hi! I'm your AI Recovery Assistant. I can help you with:</p>
+                                                <ul>
+                                                    <li>Simulation of recovery factors</li>
+                                                    <li>Smart savings recommendations</li>
+                                                    <li>Customized recovery strategies</li>
+                                                </ul>
+                                                <p>What would you like to know about your recovery plan?</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="chat-input-section">
+                                        <input type="text" id="chat-input" placeholder="Ask about recovery strategies, savings tips, or timeline adjustments...">
+                                        <button onclick="sendChatMessage()" class="btn-primary">Send</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        // Configuration - API Key handling
+        const CONFIG = {
+            OPENAI_API_KEY: 'YOUR_OPENAI_API_KEY_HERE' // Replace with your actual OpenAI API key
+        };
+        
+        // Global state
+        let currentClinic = null;
+        let currentRecoveryPlan = null;
+        let recoveryChart = null;
+
+        // Clinic Data Models - Focused on small practices
+        const clinicData = {
+            small: {
+                id: 'small',
+                name: 'Solo Practice',
+                type: 'Single Doctor Practice',
+                doctors: 1,
+                annualRevenue: 300000,
+                dailyOperatingCosts: 800,
+                monthlyRevenue: 25000,
+                monthlyExpenses: 24000,
+                monthlyProfit: 6000,
+                liquidAssets: 45000,
+                operatingDays: 56, // Days they can operate with current liquid assets
+                patientVisitsPerDay: 15,
+                avgVisitRevenue: 110,
+                departments: {
+                    general: { dailyCost: 300, vulnerability: 'medium', criticality: 'high' },
+                    admin: { dailyCost: 150, vulnerability: 'high', criticality: 'medium' },
+                    billing: { dailyCost: 200, vulnerability: 'critical', criticality: 'high' },
+                    scheduling: { dailyCost: 100, vulnerability: 'high', criticality: 'high' },
+                    records: { dailyCost: 50, vulnerability: 'critical', criticality: 'critical' }
+                }
+            },
+            medium: {
+                id: 'medium',
+                name: 'Small Group Practice',
+                type: '2-3 Doctor Practice',
+                doctors: 2.5,
+                annualRevenue: 750000,
+                dailyOperatingCosts: 2100,
+                monthlyRevenue: 62500,
+                monthlyExpenses: 63000,
+                monthlyProfit: 12500,
+                liquidAssets: 125000,
+                operatingDays: 59, // Days they can operate with current liquid assets
+                patientVisitsPerDay: 40,
+                avgVisitRevenue: 120,
+                departments: {
+                    general: { dailyCost: 900, vulnerability: 'medium', criticality: 'high' },
+                    specialty: { dailyCost: 600, vulnerability: 'medium', criticality: 'high' },
+                    admin: { dailyCost: 300, vulnerability: 'high', criticality: 'medium' },
+                    billing: { dailyCost: 150, vulnerability: 'critical', criticality: 'high' },
+                    scheduling: { dailyCost: 100, vulnerability: 'high', criticality: 'high' },
+                    records: { dailyCost: 50, vulnerability: 'critical', criticality: 'critical' }
+                }
+            }
+        };
+
+        // Initialize app
+        window.addEventListener('DOMContentLoaded', function() {
+            updateStatusIndicator();
+            displayBeforeFinancials();
+        });
+
+        // Tab switching functionality
+        function switchTab(section, tab) {
+            // Update buttons
+            const buttons = document.querySelectorAll(`[onclick*="${section}"]`);
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update content
+            const panes = document.querySelectorAll(`#${section}-before, #${section}-after`);
+            panes.forEach(pane => pane.classList.remove('active'));
+            document.getElementById(`${section}-${tab}`).classList.add('active');
+        }
+
+        // Update Status Indicator
+        function updateStatusIndicator() {
+            const hasAPIKey = CONFIG.OPENAI_API_KEY && CONFIG.OPENAI_API_KEY !== 'YOUR_OPENAI_API_KEY_HERE';
+            const statusElement = document.getElementById('ai-status');
+            
+            if (hasAPIKey) {
+                statusElement.textContent = 'AI Assistant Ready';
+            } else {
+                statusElement.textContent = 'AI Mock Mode';
+            }
+        }
+
+        // Display before financials (typical clinic operations)
+        function displayBeforeFinancials() {
+            const container = document.getElementById('before-metrics');
+            
+            const metrics = [
+                {
+                    title: 'Monthly Revenue',
+                    value: '$42K',
+                    change: 'Typical operations',
+                    type: 'success'
+                },
+                {
+                    title: 'Monthly Expenses',
+                    value: '$38.5K',
+                    change: 'Normal overhead',
+                    type: 'neutral'
+                },
+                {
+                    title: 'Monthly Profit',
+                    value: '$9.2K',
+                    change: 'Healthy margin',
+                    type: 'success'
+                },
+                {
+                    title: 'Cash Reserves',
+                    value: '$85K',
+                    change: '2+ months operating',
+                    type: 'success'
+                }
+            ];
+            
+            container.innerHTML = metrics.map(metric => `
+                <div class="metric-card ${metric.type}">
+                    <h4>${metric.title}</h4>
+                    <div class="metric-value">${metric.value}</div>
+                    <div class="metric-change">${metric.change}</div>
+                </div>
+            `).join('');
+        }
+
+        // Clinic Selection
+        function selectClinic(clinicId) {
+            // Remove previous selections
+            document.querySelectorAll('.clinic-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selection to clicked card
+            document.querySelector(`[data-clinic="${clinicId}"]`).classList.add('selected');
+            
+            // Update global state
+            currentClinic = clinicData[clinicId];
+            
+            console.log('Selected clinic:', currentClinic);
+        }
+
+        // Generate Recovery Plan
+        function generateRecoveryPlan() {
+            if (!currentClinic) {
+                alert('Please select a clinic type first');
+                return;
+            }
+            
+            const financialLoss = parseInt(document.getElementById('financial-loss').value);
+            const targetRecovery = parseInt(document.getElementById('target-recovery').value);
+            
+            // Calculate impact and recovery
+            const impact = calculateClinicImpact(currentClinic, financialLoss);
+            const timeline = generateRecoveryTimeline(currentClinic, impact, targetRecovery);
+            
+            currentRecoveryPlan = { impact, timeline, financialLoss, targetRecovery };
+            
+            // Display results
+            displayAfterFinancials(impact);
+            displayRecoveryStats(impact, timeline);
+            displayRecoveryChart(timeline);
+            
+            // Switch to the After tab
+            switchTab('tools', 'after');
+            
+            console.log('Recovery plan generated:', currentRecoveryPlan);
+        }
+
+        // Calculate Clinic Impact
+        function calculateClinicImpact(clinic, financialLoss) {
+            const downtimeDays = Math.ceil(financialLoss / (clinic.dailyOperatingCosts * 2)); // Estimate downtime
+            const lostRevenue = (clinic.dailyOperatingCosts * 1.375) * downtimeDays; // Daily revenue estimate
+            const emergencyExpenses = financialLoss * 0.25; // IT recovery, consultant costs
+            const cashFlowImpact = financialLoss + emergencyExpenses;
+            const newOperatingDays = Math.max(0, Math.floor((clinic.liquidAssets - cashFlowImpact) / clinic.dailyOperatingCosts));
+            
+            return {
+                totalLoss: financialLoss,
+                downtimeDays: Math.min(downtimeDays, 10), // Max 10 days downtime
+                lostRevenue: lostRevenue,
+                emergencyExpenses: emergencyExpenses,
+                cashFlowImpact: cashFlowImpact,
+                operatingDaysRemaining: newOperatingDays,
+                recoveryDifficulty: financialLoss > (clinic.monthlyProfit * 3) ? 'High' : 'Moderate'
+            };
+        }
+
+        // Generate Recovery Timeline
+        function generateRecoveryTimeline(clinic, impact, recoveryWeeks) {
+            const timeline = [];
+            const weeklyRecoveryRevenue = (clinic.monthlyRevenue / 4); // Weekly revenue
+            
+            for (let week = 1; week <= recoveryWeeks; week++) {
+                const recoveryPercentage = Math.min((week / recoveryWeeks) * 100, 100);
+                const operationalCapacity = Math.min(recoveryPercentage, 100);
+                const weeklyRevenue = weeklyRecoveryRevenue * (operationalCapacity / 100);
+                const remainingLoss = Math.max(0, impact.totalLoss - (weeklyRecoveryRevenue * 0.3 * week));
+                
+                timeline.push({
+                    week: week,
+                    recoveryPercentage: Math.round(recoveryPercentage),
+                    operationalCapacity: Math.round(operationalCapacity),
+                    weeklyRevenue: weeklyRevenue,
+                    remainingLoss: remainingLoss,
+                    phase: week <= recoveryWeeks * 0.3 ? 'Emergency Response' : 
+                          week <= recoveryWeeks * 0.7 ? 'System Recovery' : 'Full Operations'
+                });
+            }
+            
+            return timeline;
+        }
+
+        // Display After Financials (post-attack)
+        function displayAfterFinancials(impact) {
+            const container = document.getElementById('after-metrics');
+            
+            const metrics = [
+                {
+                    title: 'Financial Loss',
+                    value: `$${(impact.totalLoss / 1000).toFixed(0)}K`,
+                    change: 'Total attack impact',
+                    type: 'danger'
+                },
+                {
+                    title: 'Downtime',
+                    value: `${impact.downtimeDays} days`,
+                    change: 'Service interruption',
+                    type: 'warning'
+                },
+                {
+                    title: 'Lost Revenue',
+                    value: `$${(impact.lostRevenue / 1000).toFixed(0)}K`,
+                    change: 'During downtime',
+                    type: 'danger'
+                },
+                {
+                    title: 'Days to Closure',
+                    value: `${impact.operatingDaysRemaining}`,
+                    change: 'Without recovery',
+                    type: impact.operatingDaysRemaining < 30 ? 'danger' : 'warning'
+                }
+            ];
+            
+            container.innerHTML = metrics.map(metric => `
+                <div class="metric-card ${metric.type}">
+                    <h4>${metric.title}</h4>
+                    <div class="metric-value">${metric.value}</div>
+                    <div class="metric-change">${metric.change}</div>
+                </div>
+            `).join('');
+        }
+
+        // Display Recovery Stats
+        function displayRecoveryStats(impact, timeline) {
+            const container = document.getElementById('recovery-stats');
+            const finalWeek = timeline[timeline.length - 1];
+            
+            container.innerHTML = `
+                <div class="recovery-summary">
+                    <div class="recovery-stat">
+                        <h5>Recovery Timeline</h5>
+                        <span class="stat-value">${timeline.length} weeks</span>
+                    </div>
+                    <div class="recovery-stat">
+                        <h5>Final Recovery Rate</h5>
+                        <span class="stat-value">${finalWeek.recoveryPercentage}%</span>
+                    </div>
+                    <div class="recovery-stat">
+                        <h5>Recovery Difficulty</h5>
+                        <span class="stat-value">${impact.recoveryDifficulty}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Display Recovery Chart
+        function displayRecoveryChart(timeline) {
+            const ctx = document.getElementById('recovery-chart').getContext('2d');
+            
+            if (recoveryChart) {
+                recoveryChart.destroy();
+            }
+            
+            recoveryChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: timeline.map(t => `Week ${t.week}`),
+                    datasets: [
+                        {
+                            label: 'Recovery Progress (%)',
+                            data: timeline.map(t => t.recoveryPercentage),
+                            borderColor: '#10B981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Operational Capacity (%)',
+                            data: timeline.map(t => t.operationalCapacity),
+                            borderColor: '#2563EB',
+                            backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                            fill: false,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Percentage'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Clinic Financial Recovery Timeline'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Chat functionality
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message
+            addChatMessage(message, 'user');
+            input.value = '';
+            
+            // Simulate AI response (replace with actual AI call in production)
+            setTimeout(() => {
+                const aiResponse = generateAIResponse(message);
+                addChatMessage(aiResponse, 'ai');
+            }, 1000);
+        }
+
+        function addChatMessage(message, sender) {
+            const container = document.getElementById('chat-container');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}-message`;
+            
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <p>${message}</p>
+                </div>
+            `;
+            
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function generateAIResponse(message) {
+            // Simple mock responses - replace with actual OpenAI integration
+            const responses = [
+                "Based on your recovery plan, I recommend focusing on the most critical systems first. Prioritize patient scheduling and billing systems to restore revenue flow quickly.",
+                "To reduce recovery time, consider these cost-cutting measures: temporarily reduce non-essential services, negotiate payment deferrals with vendors, and implement manual processes for key workflows.",
+                "Your clinic's recovery difficulty is moderate. With focused effort on the priority areas I've identified, you should see 80% operational capacity restored within 3-4 weeks.",
+                "For future resilience, I suggest building an emergency fund equal to 2-3 months of operating expenses. This would reduce your vulnerability to similar incidents by 60%."
+            ];
+            
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+
+        // Allow Enter key to send chat messages
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('chat-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendChatMessage();
+                }
+            });
+        });
+
+        console.log('Clinic Financial Resilience Platform loaded successfully');
+    </script>
+</body>
+</html>

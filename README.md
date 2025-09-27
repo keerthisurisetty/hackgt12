@@ -1,132 +1,124 @@
-# 🏥 Hospital Cyber Resilience Simulator
+# 🏥 Clinic Financial Resilience Platform
 
-An AI-powered platform helping hospitals recover financially from cyberattacks through data-driven financial planning and operational continuity strategies.
+**Empowering small clinics with cyber-financial resilience**
+
+A Financial Resilience Web Application tailored for small clinics, helping them understand, recover from, and protect against cyber-related financial loss.
+
+## Problem Statement
+
+Small, private clinics are highly vulnerable to cyberattacks, which can disrupt services, drain finances, and compromise their ability to operate. Unlike larger institutions, these clinics often lack access to financial resilience and recovery planning tools. Insurance can be complex, expensive, and insufficient for their needs.
+
+## Solution
+
+Our platform provides proactive financial resilience tools specifically designed for small clinics (1-2 doctor practices), offering real-time insights and personalized recovery strategies instead of just waiting for insurance reimbursements.
+
+## Key Features
+
+### 📊 Before & After Financial View
+- **Before Tab**: Shows typical clinic finances in normal operations
+- **After Tab**: Displays post-cyberattack financial impact and recovery projections
+- Clean tabbed interface matching modern UX standards
+
+### 🤖 AI-Powered Recovery Assistant
+- Interactive chatbot that explains how different factors impact recovery
+- Suggests faster recovery strategies (cost-cutting, fund reallocation, risk diversification)
+- Provides personalized recommendations based on clinic profile
+
+### 💼 Risk Mitigation & Preparedness
+- Savings guidance for future incidents  
+- Scenario planning: "What happens if this occurs again?"
+- Reduces reliance on traditional insurance through direct, data-driven strategies
+
+## Target Market
+- Private clinics with 1–2 doctors
+- Clinics without in-house IT or financial recovery tools  
+- Cost-conscious providers who need simple, actionable insights
+
+## Differentiator vs Insurance
+- **Insurance**: Reactive, delayed/limited payouts after losses
+- **Our Platform**: Proactive, real-time insights, personalized strategies, future planning
 
 ## 🚀 Quick Start
 
-### Prerequisites
-
-- A modern web browser
-- OpenAI API key (for AI recommendations - optional)
-
-### Local Setup
-
 1. **Clone the repository**
-
    ```bash
    git clone https://github.com/keerthisurisetty/hackgt12.git
    cd hackgt12
    ```
 
-2. **Configure OpenAI API Key (Optional)**
-
-   **Option A: Using .env file (Recommended)**
-
+2. **Set up OpenAI API Key (optional)**
    ```bash
    cp .env.example .env
    # Edit .env and add your OpenAI API key
    ```
 
-   **Option B: Direct configuration**
-
-   - Open `hospital-simulator.html`
-   - Find the `CONFIG` object around line 420
-   - Replace `'YOUR_OPENAI_API_KEY_HERE'` with your actual OpenAI API key
-
-3. **Run the simulator**
-
+3. **Start local server**
    ```bash
-   # Start a simple HTTP server
    python3 -m http.server 8080
-
-   # Open in browser
-   open http://localhost:8080/hospital-simulator.html
    ```
 
-## 🏥 Features
+4. **Open in browser**
+   ```
+   http://localhost:8080/clinic-resilience.html
+   ```
 
-### Core Functionality
+## Demo Workflow
 
-- **Hospital Selection**: Choose between Rural General Hospital (150 beds) or Urban Medical Center (400 beds)
-- **Cyberattack Impact Assessment**: Configure attack scenarios with custom financial losses (default: $7M)
-- **6-Week Recovery Simulation**: Interactive timeline showing financial recovery phases
-- **AI-Powered Recommendations**: OpenAI-generated recovery strategies tailored to hospital profile
+1. **Select Clinic Type**: Choose between Solo Practice ($300K revenue) or Small Group Practice ($750K revenue)
+2. **Input Attack Details**: Specify financial loss and target recovery time  
+3. **View Financial Impact**: Compare before/after financial states using tabs
+4. **Explore Recovery Plan**: Interactive timeline and AI-powered recommendations
+5. **Chat with AI Assistant**: Get personalized recovery strategies and savings tips
 
-### Hospital Profiles
+## Technology Stack
 
-- **Rural General Hospital**
+- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
+- **Visualization**: Chart.js for recovery timeline graphs
+- **AI Integration**: OpenAI GPT-3.5-turbo (with fallback mock responses)
+- **Deployment**: Python HTTP Server (no dependencies)
 
-  - 150 beds, $61M annual revenue
-  - $190K daily operating costs
-  - 26/100 cyber readiness score
-  - 55 days operating runway
-
-- **Urban Medical Center**
-  - 400 beds, $230M annual revenue
-  - $656K daily operating costs
-  - 42/100 cyber readiness score
-  - 99 days operating runway
-
-### Technical Features
-
-- Single-file HTML solution (no server dependencies)
-- Chart.js visualizations for recovery timelines
-- Real-time financial impact calculations
-- Department-by-department vulnerability analysis
-- OpenAI integration with fallback mock recommendations
-
-## 📊 Demo Workflow
-
-1. **Select Hospital Profile**: Choose between rural or urban hospital
-2. **Configure Attack**: Set financial loss amount and recovery timeline
-3. **View Impact Analysis**: See immediate financial impact metrics
-4. **Recovery Timeline**: Interactive Chart.js visualization of 6-week recovery
-5. **AI Recommendations**: Get personalized recovery strategies
-
-## 🛠 Development
-
-### Project Structure
+## Project Structure
 
 ```
-hackgt12/
-├── hospital-simulator.html    # Single-file application
-├── .env                      # API keys (ignored by git)
-├── .env.example             # API key template
-├── .gitignore               # Git ignore rules
-└── README.md                # This file
+├── clinic-resilience.html    # Main application file
+├── clinic-styles.css         # Professional styling
+├── .env.example             # Environment template
+├── .gitignore              # Git ignore rules
+└── README.md               # This file
 ```
 
-### Key Technologies
+## Features Showcase
 
-- **Frontend**: HTML5, CSS3, JavaScript ES6+
-- **Visualization**: Chart.js
-- **AI**: OpenAI GPT-3.5-turbo API (optional)
-- **Deployment**: Static file hosting
+### 🏥 **Clinic-Focused Data Models**
+- **Solo Practice**: $300K annual revenue, $800 daily costs, 1 doctor
+- **Small Group Practice**: $750K annual revenue, $2.1K daily costs, 2-3 doctors
 
-## 🎯 HackGT12 Submission
+### 📊 **Interactive Before/After Tabs**
+- Clean comparison of normal vs post-attack finances
+- Visual impact assessment with recovery projections
+- Professional, minimal design perfect for presentations
 
-**Track**: The Curator's Cause Track - Building solutions that make the world better through healthcare cybersecurity resilience.
+### 🤖 **AI Recovery Assistant**
+- Real-time chat interface for recovery guidance
+- Simulation of recovery factors and smart savings recommendations
+- Contextual advice based on clinic size and attack severity
 
-**Problem Statement**: Helping hospitals recover from the financial strain of cyberattacks, which cost hospitals an average of $7 million and require 6+ weeks to fully recover from.
+### 📈 **Visual Recovery Timeline** 
+- Interactive Chart.js powered recovery progression
+- Week-by-week operational capacity restoration tracking
+- Clear visualization of path back to financial health
 
-**Solution**: AI-powered financial recovery simulation platform that provides:
+## HackGT12 Submission
 
-- Real-time impact assessment
-- Data-driven recovery planning
-- Personalized AI recommendations
-- Emergency fund planning guidance
+**Track**: Curator's Cause - Healthcare Technology Innovation  
+**Problem**: Financial vulnerability of small clinics to cyber threats  
+**Innovation**: Proactive financial resilience platform as alternative to traditional insurance  
+**Demo**: `http://localhost:8080/clinic-resilience.html`
 
-## 🔒 Security Notes
+## Vision
 
-- API keys are stored in `.env` file (git-ignored)
-- No sensitive data is stored permanently
-- All calculations performed client-side
-- Mock recommendations available if API unavailable
-
-## 📝 License
-
-This project was created for HackGT12 and is available for educational and demonstration purposes.
+Empower small clinics with technology-enabled resilience, ensuring they can continue to deliver care even in the face of cyber threats—while saving money, recovering faster, and planning for the future.
 
 ---
 
-Built with ❤️ for HackGT12 - Making healthcare more resilient against cyber threats.
+Built with ❤️ for HackGT12 by [Keerthi Surisetty](https://github.com/keerthisurisetty)
