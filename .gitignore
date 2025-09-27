@@ -1,0 +1,29 @@
+# Environment variables# Environment variables
+
+.env.env
+
+
+
+# Node modules# Node modules
+
+node_modules/node_modules/
+
+
+
+# Logs# Logs
+
+*.log*.log
+
+
+
+# Mac# Mac
+
+.DS_Store.DS_Store
+
+
+
+# IDE# IDE
+
+.vscode/.vscode/
+
+.idea/.idea/
