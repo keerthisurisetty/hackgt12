@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ClinicShield - Enterprise Cyber Recovery Platform</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -334,20 +333,21 @@
             background: rgba(255,255,255,0.7);
         }
         
+        /* Tab Content Visibility */
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
         /* Premium Clinic Cards */
         .clinic-options { 
             display: grid; 
             grid-template-columns: 1fr 1fr; 
             gap: 24px; 
             margin: 32px 0;
-        }
-        
-        /* Attack Type Cards */
-        .attack-options { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr 1fr; 
-            gap: 16px; 
-            margin: 24px 0;
         }
         
         .clinic-card { 
@@ -391,77 +391,6 @@
         
         .clinic-card.selected::before {
             transform: scaleX(1);
-        }
-        
-        /* Attack Type Cards */
-        .attack-card { 
-            border: 2px solid #e1e5e9; 
-            padding: 20px 16px; 
-            border-radius: 12px; 
-            cursor: pointer; 
-            transition: all 0.3s;
-            background: white;
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-            min-height: 120px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .attack-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #9ebdf7, #7bb3f5);
-            transform: scaleX(0);
-            transition: transform 0.3s;
-        }
-        
-        .attack-card:hover { 
-            border-color: #9ebdf7; 
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(158, 189, 247, 0.15);
-        }
-        
-        .attack-card:hover::before {
-            transform: scaleX(1);
-        }
-        
-        .attack-card.selected { 
-            border-color: #9ebdf7; 
-            background: rgba(158, 189, 247, 0.05);
-            box-shadow: 0 4px 16px rgba(158, 189, 247, 0.15);
-        }
-        
-        .attack-card.selected::before {
-            transform: scaleX(1);
-        }
-        
-        .attack-card .attack-icon {
-            font-size: 24px;
-            margin-bottom: 8px;
-            display: block;
-            color: #6b7280;
-        }
-        
-        .attack-card h4 {
-            font-size: 16px;
-            margin-bottom: 6px;
-            color: #131a22;
-            font-weight: 600;
-        }
-        
-        .attack-card p {
-            color: #565959;
-            margin-bottom: 0;
-            font-size: 13px;
-            line-height: 1.3;
         }
         
         .clinic-card h4 {
@@ -510,6 +439,48 @@
             font-weight: 500;
         }
         
+        /* Slider styling */
+        .param-group {
+            margin-bottom: 20px;
+        }
+        
+        .param-group label {
+            font-size: 0.95rem;
+            color: #565959;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #e5e7eb;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #007bff;
+            cursor: pointer;
+        }
+        
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #007bff;
+            cursor: pointer;
+            border: none;
+        }
+        
         /* Enhanced Forms */
         .input-group { 
             margin-bottom: 24px; 
@@ -525,77 +496,17 @@
         
         .input-group select { 
             width: 100%; 
-            padding: 16px 50px 16px 20px; 
+            padding: 16px 20px; 
             border: 2px solid #e1e5e9; 
             border-radius: 12px;
             font-size: 16px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            cursor: pointer;
-            position: relative;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-            background-size: 20px;
-            font-weight: 500;
-            color: #1f2937;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
-        }
-        
-        .input-group select:hover {
-            border-color: #9ebdf7;
-            background: rgba(255, 255, 255, 1);
-            box-shadow: 0 4px 12px rgba(158, 189, 247, 0.15), 0 2px 4px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
-            transform: translateY(-1px);
+            background: white;
+            transition: all 0.2s;
         }
         
         .input-group select:focus {
             border-color: #9ebdf7;
-            background: rgba(255, 255, 255, 1);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(158, 189, 247, 0.2), 0 4px 16px rgba(158, 189, 247, 0.15), 0 2px 4px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
-            transform: translateY(-1px);
-        }
-        
-        .input-group select option {
-            padding: 14px 18px;
-            font-size: 16px;
-            font-weight: 500;
-            color: #1f2937;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(225, 229, 233, 0.3);
-            border-radius: 8px;
-            margin: 3px 0;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .input-group select option:hover {
-            background: rgba(158, 189, 247, 0.12);
-            color: #1f2937;
-            border-color: rgba(158, 189, 247, 0.3);
-            transform: translateX(2px);
-            box-shadow: 0 2px 8px rgba(158, 189, 247, 0.15);
-        }
-        
-        .input-group select option:checked {
-            background: linear-gradient(135deg, rgba(158, 189, 247, 0.2) 0%, rgba(123, 179, 245, 0.15) 100%);
-            color: #1f2937;
-            font-weight: 600;
-            border-color: rgba(158, 189, 247, 0.4);
-            box-shadow: 0 2px 8px rgba(158, 189, 247, 0.2);
-        }
-        
-        .input-group select option:focus {
-            background: rgba(158, 189, 247, 0.15);
-            outline: none;
-            border-color: rgba(158, 189, 247, 0.5);
             box-shadow: 0 0 0 2px rgba(158, 189, 247, 0.2);
         }
         
@@ -887,15 +798,144 @@
             box-shadow: 0 16px 48px rgba(0,0,0,0.15);
         }
         
+        /* Chart Analysis Section */
+        .chart-analysis-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+            align-items: start;
+        }
+
+        /* Reset any default margins that might cause stagger */
+        .chart-analysis-section > * {
+            margin: 0;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        /* AI Message Box */
+        .ai-message-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            border: 1px solid #dee2e6;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .ai-icon {
+            font-size: 20px;
+        }
+
+        .ai-title {
+            font-size: 16px;
+        }
+
+        .ai-content {
+            margin-bottom: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ai-message {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 4px solid #9ebdf7;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #495057;
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Ensure canvas fills chart container */
+        #before-after-chart {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .loading-indicator {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #9ebdf7;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .btn-ai-analyze {
+            background: linear-gradient(135deg, #9ebdf7 0%, #7bb3f5 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .btn-ai-analyze:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(158, 189, 247, 0.3);
+        }
+
+        .btn-ai-analyze:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .hero-title { font-size: 36px; }
             .hero-subtitle { font-size: 20px; }
             .hero-features { flex-direction: column; gap: 20px; }
             .clinic-options { grid-template-columns: 1fr; }
-            .attack-options { grid-template-columns: 1fr; }
             .header-content { flex-direction: column; gap: 20px; }
             .nav-links { gap: 20px; }
+            .chart-analysis-section { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -904,7 +944,7 @@
     <header class="amazon-header">
         <div class="header-content">
             <div class="logo">
-                <i class="fas fa-shield-alt"></i> ClinicShield
+                🛡️ ClinicShield
             </div>
             <nav class="nav-links">
                 <a href="#recovery-planning" onclick="scrollToSection('recovery-planning')">Recovery Planning</a>
@@ -932,16 +972,16 @@
             
             <div class="hero-features">
                 <div class="hero-feature">
-                    <span><i class="fas fa-robot"></i></span> AI-Powered Predictions
+                    <span>🤖</span> AI-Powered Predictions
                 </div>
                 <div class="hero-feature">
-                    <span><i class="fas fa-bolt"></i></span> Real-Time Analysis
+                    <span>⚡</span> Real-Time Analysis
                 </div>
                 <div class="hero-feature">
-                    <span><i class="fas fa-chart-bar"></i></span> 150+ Training Cases
+                    <span>📊</span> 150+ Training Cases
                 </div>
                 <div class="hero-feature">
-                    <span><i class="fas fa-bullseye"></i></span> ±1.2 Week Accuracy
+                    <span>🎯</span> ±1.2 Week Accuracy
                 </div>
             </div>
             
@@ -956,42 +996,33 @@
             
             <!-- Recovery Planning -->
             <div class="card" id="recovery-planning">
-                <h2><i class="fas fa-bullseye"></i> AI Recovery Planning</h2>
+                <h2>🎯 AI Recovery Planning</h2>
                 
                 <h3>Select Your Clinic</h3>
                 <div class="clinic-options">
-                    <div class="clinic-card" data-clinic="small" onclick="selectClinic('small')">
-                        <h4>Solo Practice</h4>
+                    <div class="clinic-card" onclick="selectClinic('small')">
+                        <h4>Solo Family Practice</h4>
                         <p>1 doctor, $320K revenue</p>
                         <p><strong>Operating Days: 48</strong></p>
                     </div>
-                    <div class="clinic-card" data-clinic="medium" onclick="selectClinic('medium')">
-                        <h4>Small Clinic</h4>
+                    <div class="clinic-card" onclick="selectClinic('medium')">
+                        <h4>Metro Medical Group</h4>
                         <p>2-3 doctors, $780K revenue</p>
                         <p><strong>Operating Days: 55</strong></p>
                     </div>
                 </div>
                 
                 <h3>Select Attack Scenario</h3>
-                <div class="attack-options">
-                    <div class="attack-card" data-attack="phishing" onclick="selectAttack('phishing')">
-                        <i class="fas fa-envelope attack-icon"></i>
-                        <h4>Phishing Attack</h4>
-                        <p>Social engineering via email</p>
-                    </div>
-                    <div class="attack-card" data-attack="ransomware" onclick="selectAttack('ransomware')">
-                        <i class="fas fa-lock attack-icon"></i>
-                        <h4>Ransomware</h4>
-                        <p>Systems encrypted for ransom</p>
-                    </div>
-                    <div class="attack-card" data-attack="data_breach" onclick="selectAttack('data_breach')">
-                        <i class="fas fa-exclamation-triangle attack-icon"></i>
-                        <h4>Data Breach</h4>
-                        <p>Patient records compromised</p>
-                    </div>
+                <div class="input-group">
+                    <label>Attack Type</label>
+                    <select id="attack-type" onchange="currentAttackType = this.value; console.log('Attack type changed to:', currentAttackType);">
+                        <option value="phishing">📧 Phishing Attack - Social engineering via email</option>
+                        <option value="ransomware" selected>🔒 Ransomware - Systems encrypted for ransom</option>
+                        <option value="data_breach">💔 Data Breach - Patient records compromised</option>
+                    </select>
                 </div>
                 
-                <button class="btn-primary" onclick="generateRecovery()"><i class="fas fa-robot"></i> Generate AI Recovery Plan</button>
+                <button class="btn-primary" onclick="generateRecovery()">🤖 Generate AI Recovery Plan</button>
                 
                 <div id="recovery-results" style="margin-top: 32px; display: none;">
                     <div id="results-content">
@@ -1005,12 +1036,28 @@
 
             <!-- Financial Overview -->
             <div class="card" id="financial-assessment">
-                <h2><i class="fas fa-chart-line"></i> Financial Impact Assessment</h2>
+                <h2>📊 Financial Impact Projection</h2>
                 
                 <div class="tab-buttons">
-                    <button class="tab-btn active" onclick="showTab('before')"><i class="fas fa-chart-bar"></i> Current State</button>
-                    <button class="tab-btn" onclick="showTab('after')"><i class="fas fa-exclamation-circle"></i> After Attack</button>
+                    <button class="tab-btn active" onclick="showTab('before')">📊 Current State</button>
+                    <button class="tab-btn" onclick="showTab('after')">💥 After Attack</button>
                 </div>
+
+                <!-- Attack Parameters -->
+                <h3>Ransomware Parameters</h3>
+                <div class="param-group">
+                    <label for="downtime-days">Downtime Days: <span id="downtime-value">7</span></label>
+                    <input type="range" id="downtime-days" value="7" min="1" max="30" step="1" class="slider">
+                </div>
+                <div class="param-group">
+                    <label for="ransom-amount">Ransom Amount: $<span id="ransom-value">25,000</span></label>
+                    <input type="range" id="ransom-amount" value="25000" min="0" max="100000" step="1000" class="slider">
+                </div>
+                <div class="param-group">
+                    <label for="recapture-rate">Recapture Rate: <span id="recapture-value">60</span>%</label>
+                    <input type="range" id="recapture-rate" value="60" min="0" max="100" step="5" class="slider">
+                </div>
+            </div>
                 
                 <div id="tab-before" class="tab-content active">
                     <div class="metrics" id="before-metrics">
@@ -1031,11 +1078,68 @@
                             <div class="metric-label">Operating Runway</div>
                         </div>
                     </div>
+                    
+                    <!-- Monte Carlo Simulation Chart and AI Analysis -->
+                    <div class="chart-analysis-section">
+                        <div class="chart-container" style="position: relative;">
+                            <canvas id="monte-carlo-chart"></canvas>
+                            <div class="simulation-params" style="position: absolute; top: 10px; right: 10px; font-size: 10px; color: #999; text-align: right; line-height: 1.3; background: rgba(255, 255, 255, 0.9); padding: 8px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                <div><strong>Parameters:</strong></div>
+                                <div>Downtime: 3-30 days</div>
+                                <div>Ransom: $0-$300k</div>
+                                <div>Payment: 80% rate</div>
+                                <div>Recapture: 0-80%</div>
+                            </div>
+                        </div>
+                        <div class="ai-message-box">
+                            <div class="ai-header">
+                                <span class="ai-icon">🤖</span>
+                                <span class="ai-title">AI Assistant Says...</span>
+                            </div>
+                            <div class="ai-content">
+                                <div id="ai-loading-before" class="loading-indicator" style="display: none;">
+                                    <div class="loading-spinner"></div>
+                                    <span>AI is analyzing your data...</span>
+                                </div>
+                                <div id="ai-message-before" class="ai-message">
+                                    Click "Generate Analysis" to get AI insights about your clinic's financial resilience.
+                                </div>
+                            </div>
+                            <button id="generate-analysis-before" class="btn-ai-analyze" onclick="generateMonteCarloAnalysis()">
+                                Generate AI Analysis
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 
                 <div id="tab-after" class="tab-content">
                     <div class="metrics" id="after-metrics">
                         <!-- Will be populated by JavaScript -->
+                    </div>
+                    
+                    <!-- Financial Impact Chart and AI Analysis -->
+                    <div class="chart-analysis-section">
+                        <div class="chart-container">
+                            <canvas id="before-after-chart"></canvas>
+                        </div>
+                        <div class="ai-message-box">
+                            <div class="ai-header">
+                                <span class="ai-icon">🤖</span>
+                                <span class="ai-title">AI Assistant Says...</span>
+                            </div>
+                            <div class="ai-content">
+                                <div id="ai-loading" class="loading-indicator" style="display: none;">
+                                    <div class="loading-spinner"></div>
+                                    <span>AI is analyzing your data...</span>
+                                </div>
+                                <div id="ai-message" class="ai-message">
+                                    Click "Generate Analysis" to get AI insights about your clinic's financial impact.
+                                </div>
+                            </div>
+                            <button class="btn-ai-analyze" onclick="generateHistogramAndAnalysis()">
+                                Generate AI Analysis
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1045,14 +1149,14 @@
     <!-- Our Vision Section -->
     <div class="container">
         <div style="text-align: center; margin-bottom: 60px;">
-            <h2 style="font-size: 36px; color: #1f2937; margin-bottom: 24px;"><i class="fas fa-bullseye"></i> Our Vision</h2>
+            <h2 style="font-size: 36px; color: #1f2937; margin-bottom: 24px;">🎯 Our Vision</h2>
             <p style="font-size: 20px; color: #1f2937; max-width: 800px; margin: 0 auto; line-height: 1.6; font-weight: 500;">
                 Small healthcare practices are increasingly vulnerable to cyber attacks, yet they lack the resources and expertise to adequately prepare for and recover from these incidents. We believe that every clinic, regardless of size, deserves access to enterprise-level AI-powered cyber resilience tools that can predict recovery timelines and provide actionable financial planning to keep their doors open during the most challenging times.
             </p>
         </div>
         
         <div style="text-align: center; margin-top: 40px; padding: 40px; background: white; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.12);">
-            <h3 style="color: #1f2937; margin-bottom: 24px; font-size: 24px;"><i class="fas fa-rocket"></i> Transform Your Practice</h3>
+            <h3 style="color: #1f2937; margin-bottom: 24px; font-size: 24px;">🚀 Transform Your Practice</h3>
             <button class="btn-primary" onclick="scrollToDemo()" style="font-size: 18px; padding: 16px 32px;">
                 Try AI Platform
             </button>
@@ -1065,7 +1169,7 @@
         <div class="container">
             <div style="text-align: center;">
                 <div style="font-size: 24px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; color: #1f2937;">
-                    <i class="fas fa-shield-alt"></i> ClinicShield
+                    🛡️ ClinicShield
                 </div>
                 <p style="color: #6b7280; line-height: 1.6; max-width: 600px; margin: 0 auto;">
                     The first AI-powered cyber recovery platform built specifically for healthcare practices. 
@@ -1078,13 +1182,13 @@
     <!-- Floating AI Chatbot -->
     <div class="chatbot-container">
         <button class="chatbot-button" id="chatbotButton">
-            <i class="fas fa-robot"></i>
+            🤖
         </button>
         
         <div class="chatbot-window" id="chatbotWindow">
             <div class="chatbot-header">
                 <div class="chatbot-title">
-                    <i class="fas fa-robot"></i> ClinicShield AI Assistant
+                    🤖 ClinicShield AI Assistant
                 </div>
                 <button class="chatbot-close" id="chatbotClose">
                     ×
@@ -1093,14 +1197,14 @@
             
             <div class="chatbot-messages" id="chatbotMessages">
                 <div class="message bot">
-                    Hi! I'm your ClinicShield AI assistant. I can help you with questions about cyber recovery planning, our AI predictions, pricing, or anything else about protecting your clinic. How can I assist you today? <i class="fas fa-shield-alt"></i>
+                    Hi! I'm your ClinicShield AI assistant. I can help you with questions about cyber recovery planning, our AI predictions, pricing, or anything else about protecting your clinic. How can I assist you today? 🛡️
                 </div>
             </div>
             
             <div class="chatbot-input-container">
                 <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Ask me anything about ClinicShield..." maxlength="500">
                 <button class="chatbot-send" id="chatbotSend">
-                    <i class="fas fa-paper-plane"></i>
+                    ➤
                 </button>
             </div>
         </div>
@@ -1324,7 +1428,12 @@
                 monthlyExpenses: 26250,
                 liquidAssets: 42000,
                 operatingDays: 48,
-                dailyCosts: 875
+                dailyCosts: 875,
+                annualRevenue: 320000,
+                dailyOperatingCosts: 875,
+                monthlyProfit: 8750,
+                patientVisitsPerDay: 18,
+                avgVisitRevenue: 95,
             },
             medium: {
                 name: 'Metro Medical Group',
@@ -1458,6 +1567,23 @@
             
             // Activate button
             event.target.classList.add('active');
+            
+            // If switching to 'after' tab, calculate ransomware impact and create chart
+            if (tabName === 'after') {
+                calculateRansomwareImpactAndUpdate();
+                // Create the chart when switching to after tab
+                setTimeout(() => {
+                    createBeforeAfterChart();
+                }, 100);
+            }
+            
+            // If switching to 'before' tab, create Monte Carlo simulation chart
+            if (tabName === 'before') {
+                // Create the Monte Carlo chart when switching to before tab
+                setTimeout(() => {
+                    createMonteCarloChart();
+                }, 100);
+            }
         }
         
         function showRecoveryTab(tabName) {
@@ -1488,11 +1614,8 @@
                 card.classList.remove('selected');
             });
             
-            // Add selection to the clicked card using data attribute
-            const selectedCard = document.querySelector(`[data-clinic="${clinicId}"]`);
-            if (selectedCard) {
-                selectedCard.classList.add('selected');
-            }
+            // Add selection to clicked card
+            event.target.classList.add('selected');
             
             // Update global state
             currentClinic = clinicData[clinicId];
@@ -1500,25 +1623,6 @@
             
             // Update before metrics
             updateBeforeMetrics();
-        }
-        
-        function selectAttack(attackId) {
-            console.log('Selecting attack type:', attackId);
-            
-            // Remove selection from all attack cards
-            document.querySelectorAll('.attack-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-            
-            // Add selection to the clicked card using data attribute
-            const selectedCard = document.querySelector(`[data-attack="${attackId}"]`);
-            if (selectedCard) {
-                selectedCard.classList.add('selected');
-            }
-            
-            // Update global state
-            currentAttackType = attackId;
-            console.log('Current attack type set to:', currentAttackType);
         }
         
         function updateBeforeMetrics() {
@@ -1837,15 +1941,6 @@
         // Load the trained ML model
         loadTrainedModel();
         
-        // Initialize default attack type selection
-        document.addEventListener('DOMContentLoaded', () => {
-            // Select default attack type (ransomware)
-            const defaultAttackCard = document.querySelector('[data-attack="ransomware"]');
-            if (defaultAttackCard) {
-                defaultAttackCard.classList.add('selected');
-            }
-        });
-        
         // Test function
         window.testApp = function() {
             console.log('Testing functions...');
@@ -1868,6 +1963,698 @@
                 });
             }
         }
+
+
+        // Manual merge functions
+        
+        // Helper function for percentile calculation
+        function percentile(arr, p) {
+            const sorted = arr.slice().sort((a, b) => a - b);
+            const index = Math.ceil((p / 100) * sorted.length) - 1;
+            return sorted[Math.max(0, index)];
+        }
+        
+        // Monte Carlo Simulation
+        function runMonteCarloSimulation(clinic, trials = 10000) {
+            console.log('runMonteCarloSimulation called with clinic:', clinic);
+            
+            if (!clinic) {
+                console.error('No clinic provided to runMonteCarloSimulation');
+                return { results: [], trials: 0, mean: 0, p90: 0, p10: 0 };
+            }
+            
+            const results = [];
+            
+            for (let i = 0; i < trials; i++) {
+                // Random downtime between 3-30 days
+                const downtimeDays = Math.floor(Math.random() * 28) + 3;
+                
+                // Random ransom between $0-$300k
+                const ransomAmount = Math.floor(Math.random() * 300000);
+                
+                // Random ransom payment probability (0-100% chance of actually paying)
+                const ransomPaymentProbability = Math.random();
+                const actualRansomPaid = ransomPaymentProbability > 0.2 ? ransomAmount : 0; // 80% chance of paying
+                
+                // Random recapture rate between 0-80%
+                const recaptureRate = Math.random() * 0.8;
+                
+                // Calculate impact
+                const impact = calculateRansomwareImpact(clinic, downtimeDays, actualRansomPaid, recaptureRate);
+                results.push(impact.totalLoss);
+            }
+            
+            // Calculate statistics
+            results.sort((a, b) => a - b);
+            const mean = results.reduce((sum, val) => sum + val, 0) / results.length;
+            const p90 = results[Math.floor(results.length * 0.9)];
+            const p10 = results[Math.floor(results.length * 0.1)];
+            
+            return {
+                results: results,
+                trials: trials,
+                mean: mean,
+                p90: p90,
+                p10: p10
+            };
+        }
+        
+        // Monte Carlo Chart Creation
+        async function createMonteCarloChart() {
+            const ctx = document.getElementById('monte-carlo-chart').getContext('2d');
+            
+            if (impactCharts.monteCarlo) {
+                impactCharts.monteCarlo.destroy();
+            }
+            
+            // Get current clinic and run simulation
+            const selectedClinic = document.querySelector('input[name="clinic"]:checked');
+            console.log('Selected clinic element:', selectedClinic);
+            
+            let clinic;
+            if (!selectedClinic) {
+                console.error('No clinic selected for Monte Carlo simulation, using default');
+                clinic = clinicData.small; // Use default clinic
+            } else {
+                const clinicId = selectedClinic.value;
+                console.log('Clinic ID:', clinicId);
+                clinic = clinicData[clinicId];
+                console.log('Clinic data:', clinic);
+                
+                if (!clinic) {
+                    console.error('Clinic not found, using default');
+                    clinic = clinicData.small;
+                }
+            }
+            
+            const results = runMonteCarloSimulation(clinic);
+            
+            // Update simulation parameters display
+            const paramsElement = document.querySelector('.simulation-params');
+            if (paramsElement) {
+                paramsElement.innerHTML = `
+                    <div><strong>Parameters:</strong></div>
+                    <div>Downtime: 3-30 days</div>
+                    <div>Ransom: $0-$300k</div>
+                    <div>Payment: 80% rate</div>
+                    <div>Recapture: 0-80%</div>
+                    <div style="margin-top: 4px; font-size: 9px; color: #666;">${results.trials.toLocaleString()} trials</div>
+                `;
+            }
+            
+            // Create histogram data from results
+            const histogram = createHistogram(results.results, 20);
+            
+            // Convert frequency to percentages
+            const totalTrials = results.trials;
+            const percentages = histogram.data.map(freq => ((freq / totalTrials) * 100).toFixed(1));
+            
+            impactCharts.monteCarlo = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: histogram.labels.map(label => '$' + (label / 1000).toFixed(1) + 'K'),
+                    datasets: [{
+                        label: 'Frequency',
+                        data: percentages,
+                        backgroundColor: 'rgba(59, 130, 246, 0.6)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Total Loss ($)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Frequency (%)'
+                            },
+                            beginAtZero: true,
+                            max: Math.ceil(Math.max(...percentages) / 10) * 10
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label;
+                                    const value = context.parsed.y;
+                                    return `${label}: ${value}%`;
+                                }
+                            }
+                        },
+                        title: {
+                            display: false
+                        }
+                    }
+                }
+            });
+            
+            return results;
+        }
+
+        // Create histogram from Monte Carlo results
+        function createHistogram(data, bins) {
+            const min = Math.min(...data);
+            const max = Math.max(...data);
+            const binSize = (max - min) / bins;
+            
+            const histogram = new Array(bins).fill(0);
+            const labels = [];
+            
+            for (let i = 0; i < bins; i++) {
+                const binStart = min + (i * binSize);
+                const binEnd = min + ((i + 1) * binSize);
+                labels.push(Math.round(binStart));
+            }
+            
+            data.forEach(value => {
+                const binIndex = Math.min(Math.floor((value - min) / binSize), bins - 1);
+                histogram[binIndex]++;
+            });
+            
+            return { labels, data: histogram };
+        }
+
+        // OpenAI API Integration
+        async function generateChartDescription(chartType, data) {
+            console.log('Generating chart description for type:', chartType, 'with data:', data);
+            const OPENAI_API_Key = '';
+            
+            if (!OPENAI_API_Key) {
+                console.log('No API key found');
+                // Return default descriptions if no API key
+                return chartType === 'stacked' 
+                    ? "This chart shows how much money your clinic loses during different outage lengths. Red bars show lost patient revenue, orange bars show ongoing expenses. A 7-day outage is most common, while 14-day outages create severe financial damage that could threaten your clinic's survival."
+                    : "This chart shows the range of financial losses your clinic could face from cyberattacks. The highest bars show the most likely outcomes, while the lower bars show extreme scenarios. Most attacks cause moderate damage, but some could be financially devastating.";
+            }
+
+            try {
+                let prompt = '';
+                
+                if (chartType === 'stacked') {
+                    prompt = `Analyze this financial data and provide a clear, business-focused description (2-3 sentences) for healthcare executives:
+                    Data:
+                    - 3-day outage: Lost Revenue $${(data.scenarios[0].lostRevenue / 1000).toFixed(1)}K, Fixed Expenses $${(data.scenarios[0].fixedExpenses / 1000).toFixed(1)}K
+                    - 7-day outage: Lost Revenue $${(data.scenarios[1].lostRevenue / 1000).toFixed(1)}K, Fixed Expenses $${(data.scenarios[1].fixedExpenses / 1000).toFixed(1)}K  
+                    - 14-day outage: Lost Revenue $${(data.scenarios[2].lostRevenue / 1000).toFixed(1)}K, Fixed Expenses $${(data.scenarios[2].fixedExpenses / 1000).toFixed(1)}K
+
+                    Explain what this means for the clinic's operations and finances. Use plain language that healthcare executives can understand.`;
+                } else if (chartType === 'monte-carlo') {
+                    const maxLoss = Math.max(...data.results);
+                    const meanLoss = data.mean;
+                    const p90Loss = data.p90;
+                    const p10Loss = percentile(data.results, 10);
+                    
+                    prompt = `Analyze this simulation data and provide a clear, business-focused description (2-3 sentences) for healthcare executives:
+                    Data:
+                    - ${data.trials} simulated attack scenarios
+                    - Average loss: $${(meanLoss / 1000).toFixed(1)}K (most common outcome)
+                    - High-risk loss: $${(p90Loss / 1000).toFixed(1)}K (serious but rare)
+                    - Worst-case loss: $${(maxLoss / 1000).toFixed(1)}K (catastrophic scenario)
+                    - Best-case loss: $${(p10Loss / 1000).toFixed(1)}K (minimal impact)
+
+                    Explain what these numbers mean for the clinic's financial health and survival. Use plain language that healthcare executives can understand.`;
+                }
+
+                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${OPENAI_API_Key}`
+                    },
+                    body: JSON.stringify({
+                        model: 'gpt-4o-mini',
+                        messages: [
+                            {
+                                role: 'system',
+                                content: 'You are a healthcare business consultant. Provide clear, plain-language descriptions of financial data for healthcare executives. Focus on what the numbers mean for clinic operations, patient care, and financial survival. Avoid statistical jargon and use business terms that healthcare leaders understand.'
+                            },
+                            {
+                                role: 'user',
+                                content: prompt
+                            }
+                        ],
+                        max_tokens: 150,
+                        temperature: 0.7
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`OpenAI API error: ${response.status}`);
+                }
+
+                const result = await response.json();
+                const description = result.choices[0].message.content.trim();
+                
+                return description;
+
+            } catch (error) {
+                console.error('OpenAI API error:', error);
+                
+                // Return default descriptions on error
+                return chartType === 'stacked' 
+                    ? "This chart shows how much money your clinic loses during different outage lengths. Red bars show lost patient revenue, orange bars show ongoing expenses. A 7-day outage is most common, while 14-day outages create severe financial damage that could threaten your clinic's survival."
+                    : "This chart shows the range of financial losses your clinic could face from cyberattacks. The highest bars show the most likely outcomes, while the lower bars show extreme scenarios. Most attacks cause moderate damage, but some could be financially devastating.";
+            }
+        }
+
+        function calculateRansomwareImpact(clinic, downtimeDays, ransomwareAmount, recaptureRate = 0) {
+            console.log('calculateRansomwareImpact called with clinic:', clinic);
+            console.log('Clinic properties:', clinic ? Object.keys(clinic) : 'clinic is null/undefined');
+            
+            // Ensure clinic object exists and has required properties
+            if (!clinic || typeof clinic !== 'object') {
+                console.error('No valid clinic data provided to calculateRansomwareImpact');
+                return { lostRevenueRaw: 0, recapturedRevenue: 0, lostRevenue: 0, fixedExpenseBurn: 0, ransom: 0, totalLoss: 0 };
+            }
+            
+            const days = Math.max(0, downtimeDays);
+
+            // revenue/day from visits (fallback to monthly revenue / 22 if missing)
+            const revenuePerDay = (clinic && typeof clinic.patientVisitsPerDay === 'number' && typeof clinic.avgVisitRevenue === 'number')
+                ? clinic.patientVisitsPerDay * clinic.avgVisitRevenue
+                : (clinic && clinic.monthlyRevenue) ? clinic.monthlyRevenue / 22 : 0;
+
+            const fixedExpensePerDay = (clinic && clinic.dailyCosts) || (clinic && clinic.dailyOperatingCosts) || 0;
+
+            // Core calculations
+            const lostRevenueRaw = revenuePerDay * days;
+            const recapturedRevenue = lostRevenueRaw * recaptureRate; // portion recovered later
+            const lostRevenue = lostRevenueRaw - recapturedRevenue;
+
+            const fixedExpenseBurn = fixedExpensePerDay * days;
+            const ransom = Math.max(0, parseInt(ransomwareAmount) || 0);
+
+            const totalLoss = lostRevenue + fixedExpenseBurn + ransom;
+            
+            // Debug validation - total loss should always increase with ransom
+            console.log('Debug - Ransom validation:', {
+                ransomInput: ransomwareAmount,
+                ransomCalculated: ransom,
+                lostRevenue: lostRevenue,
+                fixedExpenseBurn: fixedExpenseBurn,
+                totalLoss: totalLoss
+            });
+
+            return {
+                lostRevenueRaw,      // total revenue impact before recapture
+                recapturedRevenue,   // revenue expected to be regained
+                lostRevenue,         // net lost revenue after recapture
+                fixedExpenseBurn,    // fixed costs during downtime
+                ransom,              // ransom payment
+                totalLoss            // final impact
+            };
+        }
+
+        // Function to calculate ransomware impact and update the tab-after display
+        function calculateRansomwareImpactAndUpdate() {
+            console.log('Calculating ransomware impact and updating tab-after...');
+            
+            // Check if a clinic is selected
+            if (!currentClinic) {
+                console.log('No clinic selected, using default values');
+                // Use default clinic data if none selected
+                currentClinic = clinicData.small;
+            }
+            
+            // Get parameters from existing sliders
+            const downtimeDays = parseInt(document.getElementById('downtime-days').value) || 7;
+            const ransomAmount = parseInt(document.getElementById('ransom-amount').value) || 25000;
+            const recaptureRate = parseInt(document.getElementById('recapture-rate').value) / 100 || 0.6;
+            
+            console.log('Slider parameters:', { downtimeDays, ransomAmount, recaptureRate });
+            
+            // Run the existing calculateRansomwareImpact function
+            const impact = calculateRansomwareImpact(currentClinic, downtimeDays, ransomAmount, recaptureRate);
+            
+            console.log('Calculated impact:', impact);
+            console.log('Ransom amount input:', ransomAmount);
+            console.log('Ransom in impact:', impact.ransom);
+            console.log('Total loss breakdown:', {
+                lostRevenue: impact.lostRevenue,
+                fixedExpenseBurn: impact.fixedExpenseBurn,
+                ransom: impact.ransom,
+                totalLoss: impact.totalLoss
+            });
+            
+            // Calculate new cash reserves after attack
+            const newCashReserves = Math.max(0, currentClinic.liquidAssets - impact.totalLoss);
+            
+            // Populate the tab-after division with the requested fields
+            document.getElementById('after-metrics').innerHTML = `
+                <div class="metric">
+                    <div class="metric-value" style="color: #dc3545;">$${Math.round(impact.totalLoss/1000)}K</div>
+                    <div class="metric-label">Total Loss</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color: #dc3545;">$${Math.round(impact.lostRevenue/1000)}K</div>
+                    <div class="metric-label">Revenue Lost</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">$${Math.round(newCashReserves/1000)}K</div>
+                    <div class="metric-label">Cash Reserves</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color: #007bff;">${downtimeDays} days</div>
+                    <div class="metric-label">Downtime Days</div>
+                </div>
+            `;
+        }
+
+        // Function to update slider display values
+        function updateSliderDisplay() {
+            // Update downtime display
+            const downtimeValue = document.getElementById('downtime-days').value;
+            document.getElementById('downtime-value').textContent = downtimeValue;
+            
+            // Update ransom display
+            const ransomValue = document.getElementById('ransom-amount').value;
+            document.getElementById('ransom-value').textContent = parseInt(ransomValue).toLocaleString();
+            
+            // Update recapture display
+            const recaptureValue = document.getElementById('recapture-rate').value;
+            document.getElementById('recapture-value').textContent = recaptureValue;
+        }
+
+        // Function to update slider displays and recalculate impact if needed
+        function handleSliderChange() {
+            // Update the display values
+            updateSliderDisplay();
+            
+            // If the after tab is currently active, recalculate the impact
+            if (document.getElementById('tab-after').classList.contains('active')) {
+                calculateRansomwareImpactAndUpdate();
+            }
+        }
+
+        async function createBeforeAfterChart(clinic, impact) {
+            const ctx = document.getElementById('before-after-chart').getContext('2d');
+            
+            if (impactCharts.beforeAfter) {
+                impactCharts.beforeAfter.destroy();
+            }
+            
+            // Compare multiple downtime scenarios
+            const scenarios = [3, 7, 14]; // days
+            const currentRansom = impact.ransom;
+            
+            const currentRecaptureRate = parseInt(document.getElementById('recapture-rate').value) / 100;
+            
+            const scenarioData = scenarios.map(days => {
+                const scenarioImpact = calculateRansomwareImpact(clinic, days, currentRansom, currentRecaptureRate);
+            return {
+                    days: days,
+                    lostRevenue: scenarioImpact.lostRevenue,
+                    fixedExpenses: scenarioImpact.fixedExpenseBurn
+                };
+            });
+
+            // Generate AI description for stacked bar chart
+            const chartData = { scenarios: scenarioData };
+            const aiDescription = await generateChartDescription('stacked', chartData);
+            
+            // Update the description in the DOM
+            const descriptionElement = document.querySelector('.chart-row.chart-with-description:first-child .chart-description p');
+            if (descriptionElement) {
+                descriptionElement.textContent = aiDescription;
+            }
+            
+            impactCharts.beforeAfter = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: scenarios.map(d => `${d} Days`),
+                    datasets: [
+                        {
+                            label: 'Lost Revenue',
+                            data: scenarioData.map(s => s.lostRevenue),
+                            backgroundColor: '#DC3545',
+                            borderColor: '#C82333',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Fixed Expenses',
+                            data: scenarioData.map(s => s.fixedExpenses),
+                            backgroundColor: '#FD7E14',
+                            borderColor: '#E55A00',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            stacked: true,
+                            title: {
+                                display: true,
+                                text: 'Downtime Scenarios'
+                            }
+                        },
+                        y: {
+                            stacked: true,
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Total Loss ($)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + (value / 1000).toFixed(1) + 'K';
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: $${(context.parsed.y / 1000).toFixed(1)}K`;
+                                },
+                                footer: function(tooltipItems) {
+                                    const total = tooltipItems.reduce((sum, item) => sum + item.parsed.y, 0);
+                                    return `Total: $${(total / 1000).toFixed(1)}K`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Global variables for charts
+        let beforeAfterChart = null;
+        let impactCharts = { beforeAfter: null };
+
+        // Function to create before/after chart
+        async function createBeforeAfterChart() {
+            const ctx = document.getElementById('before-after-chart').getContext('2d');
+            
+            if (beforeAfterChart) {
+                beforeAfterChart.destroy();
+            }
+            
+            // Get current clinic and calculate impact for different scenarios
+            const clinic = currentClinic || clinicData.small;
+            const currentRansom = parseInt(document.getElementById('ransom-amount').value) || 25000;
+            const currentRecaptureRate = parseInt(document.getElementById('recapture-rate').value) / 100 || 0.6;
+            
+            // Compare multiple downtime scenarios
+            const scenarios = [3, 7, 14]; // days
+            
+            const scenarioData = scenarios.map(days => {
+                const scenarioImpact = calculateRansomwareImpact(clinic, days, currentRansom, currentRecaptureRate);
+                return {
+                    days: days,
+                    lostRevenue: scenarioImpact.lostRevenue,
+                    fixedExpenses: scenarioImpact.fixedExpenseBurn
+                };
+            });
+            
+            beforeAfterChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: scenarios.map(d => `${d} Days`),
+                    datasets: [
+                        {
+                            label: 'Lost Revenue',
+                            data: scenarioData.map(s => s.lostRevenue),
+                            backgroundColor: '#DC3545',
+                            borderColor: '#C82333',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Fixed Expenses',
+                            data: scenarioData.map(s => s.fixedExpenses),
+                            backgroundColor: '#FD7E14',
+                            borderColor: '#E55A00',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            stacked: true,
+                            title: {
+                                display: true,
+                                text: 'Downtime Scenarios'
+                            }
+                        },
+                        y: {
+                            stacked: true,
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Total Loss ($)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + (value / 1000).toFixed(1) + 'K';
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Financial Impact by Downtime Duration'
+                        },
+                        legend: {
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: $${(context.parsed.y / 1000).toFixed(1)}K`;
+                                },
+                                footer: function(tooltipItems) {
+                                    const total = tooltipItems.reduce((sum, item) => sum + item.parsed.y, 0);
+                                    return `Total: $${(total / 1000).toFixed(1)}K`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            return scenarioData;
+        }
+
+        // Function to generate before/after chart and AI analysis
+        async function generateHistogramAndAnalysis() {
+            console.log('Generating before/after chart and AI analysis...');
+            
+            // Show loading state
+            document.getElementById('ai-loading').style.display = 'flex';
+            document.getElementById('ai-message').style.display = 'none';
+            document.querySelector('.btn-ai-analyze').disabled = true;
+            
+            try {
+                // Create before/after chart and get scenario data
+                const scenarioData = await createBeforeAfterChart();
+                
+                // Prepare data for AI analysis
+                const chartData = {
+                    scenarios: scenarioData.map(s => ({
+                        days: s.days,
+                        lostRevenue: s.lostRevenue,
+                        fixedExpenses: s.fixedExpenses
+                    }))
+                };
+                
+                // Generate AI description
+                const aiDescription = await generateChartDescription('stacked', chartData);
+                
+                // Hide loading and show AI message
+                document.getElementById('ai-loading').style.display = 'none';
+                document.getElementById('ai-message').style.display = 'block';
+                document.getElementById('ai-message').textContent = aiDescription;
+                
+            } catch (error) {
+                console.error('AI analysis error:', error);
+                
+                // Hide loading and show fallback message
+                document.getElementById('ai-loading').style.display = 'none';
+                document.getElementById('ai-message').style.display = 'block';
+                document.getElementById('ai-message').textContent = 
+                    "This chart shows how your clinic's financial impact increases with longer downtime periods. The red bars represent lost revenue while orange bars show fixed expenses that continue during outages. Longer downtimes create exponentially higher financial damage, making rapid recovery critical for clinic survival.";
+            } finally {
+                document.querySelector('.btn-ai-analyze').disabled = false;
+            }
+        }
+
+        // Generate Monte Carlo Analysis for Before Tab
+        async function generateMonteCarloAnalysis() {
+            console.log('Generating Monte Carlo analysis for Before tab');
+            
+            // Show loading indicator
+            document.getElementById('ai-loading-before').style.display = 'flex';
+            document.getElementById('ai-message-before').style.display = 'none';
+            document.getElementById('generate-analysis-before').disabled = true;
+            
+            try {
+                // Create Monte Carlo chart and get results
+                const results = await createMonteCarloChart();
+                
+                // Generate AI description
+                console.log('Calling generateChartDescription with monte-carlo and results:', results);
+                const aiDescription = await generateChartDescription('monte-carlo', results);
+                console.log('AI description received:', aiDescription);
+                
+                // Hide loading and show AI message
+                document.getElementById('ai-loading-before').style.display = 'none';
+                document.getElementById('ai-message-before').style.display = 'block';
+                document.getElementById('ai-message-before').textContent = aiDescription;
+                
+            } catch (error) {
+                console.error('Monte Carlo AI analysis error:', error);
+                
+                // Hide loading and show fallback message
+                document.getElementById('ai-loading-before').style.display = 'none';
+                document.getElementById('ai-message-before').style.display = 'block';
+                document.getElementById('ai-message-before').textContent = 
+                    "This Monte Carlo simulation shows the range of financial losses your clinic could face from cyberattacks. The simulation runs thousands of scenarios with varying attack parameters to show the most likely outcomes, helping you understand your financial risk exposure.";
+            } finally {
+                document.getElementById('generate-analysis-before').disabled = false;
+            }
+        }
+
+        // Add event listeners for slider changes
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listeners to sliders for real-time updates
+            const sliders = ['downtime-days', 'ransom-amount', 'recapture-rate'];
+            sliders.forEach(sliderId => {
+                const slider = document.getElementById(sliderId);
+                if (slider) {
+                    slider.addEventListener('input', handleSliderChange);
+                }
+            });
+            
+            // Create Monte Carlo chart for Before tab (active by default)
+            setTimeout(() => {
+                createMonteCarloChart();
+            }, 100);
+            
+            // Chart will be created when After Attack tab is shown
+        });
     </script>
 </body>
 </html>
+
