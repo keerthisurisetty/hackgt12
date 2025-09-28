@@ -1,0 +1,38 @@
+{
+  "model_type": "SimpleClinicRecovery",
+  "version": "1.0",
+  "training_date": "2025-09-27T20:47:54.660552",
+  "model_weights": {
+    "attack_weights": {
+      "phishing": 1.5167556994017368,
+      "ransomware": 4.4097081019240685,
+      "data_breach": 2.9453930205426073,
+      "malware": 2.5885041252127072
+    },
+    "clinic_weights": {
+      "solo_practice": 2.7095476286491547,
+      "small_group": 2.907119478054845,
+      "medium_group": 2.6960650747309907
+    },
+    "financial_impact_factor": 1.3131342209313959,
+    "backup_reduction": 0.3,
+    "incident_plan_reduction": 0.2,
+    "insurance_reduction": 0.1,
+    "it_maturity_factor": 0.25
+  },
+  "model_stats": {
+    "mae": 1.2113158045388124,
+    "r_squared": -0.31205264394301846,
+    "training_samples": 150,
+    "mean_recovery_weeks": 2.771899447765662
+  },
+  "feature_list": [
+    "clinic_type",
+    "attack_type",
+    "financial_loss_ratio",
+    "has_backup",
+    "has_incident_plan",
+    "has_insurance",
+    "it_maturity"
+  ]
+}
