@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ClinicShield - Enterprise Cyber Recovery Platform</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -350,6 +351,14 @@
             margin: 32px 0;
         }
         
+        /* Attack Type Cards */
+        .attack-options { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr 1fr; 
+            gap: 16px; 
+            margin: 24px 0;
+        }
+        
         .clinic-card { 
             border: 2px solid #e1e5e9; 
             padding: 32px; 
@@ -391,6 +400,77 @@
         
         .clinic-card.selected::before {
             transform: scaleX(1);
+        }
+        
+        /* Attack Type Cards */
+        .attack-card { 
+            border: 2px solid #e1e5e9; 
+            padding: 20px 16px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            transition: all 0.3s;
+            background: white;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .attack-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #9ebdf7, #7bb3f5);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+        
+        .attack-card:hover { 
+            border-color: #9ebdf7; 
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(158, 189, 247, 0.15);
+        }
+        
+        .attack-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .attack-card.selected { 
+            border-color: #9ebdf7; 
+            background: rgba(158, 189, 247, 0.05);
+            box-shadow: 0 4px 16px rgba(158, 189, 247, 0.15);
+        }
+        
+        .attack-card.selected::before {
+            transform: scaleX(1);
+        }
+        
+        .attack-card .attack-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            display: block;
+            color: #6b7280;
+        }
+        
+        .attack-card h4 {
+            font-size: 16px;
+            margin-bottom: 6px;
+            color: #131a22;
+            font-weight: 600;
+        }
+        
+        .attack-card p {
+            color: #565959;
+            margin-bottom: 0;
+            font-size: 13px;
+            line-height: 1.3;
         }
         
         .clinic-card h4 {
@@ -933,6 +1013,7 @@
             .hero-subtitle { font-size: 20px; }
             .hero-features { flex-direction: column; gap: 20px; }
             .clinic-options { grid-template-columns: 1fr; }
+            .attack-options { grid-template-columns: 1fr; }
             .header-content { flex-direction: column; gap: 20px; }
             .nav-links { gap: 20px; }
             .chart-analysis-section { grid-template-columns: 1fr; }
@@ -944,7 +1025,7 @@
     <header class="amazon-header">
         <div class="header-content">
             <div class="logo">
-                🛡️ ClinicShield
+                <i class="fas fa-shield-alt"></i> ClinicShield
             </div>
             <nav class="nav-links">
                 <a href="#recovery-planning" onclick="scrollToSection('recovery-planning')">Recovery Planning</a>
@@ -972,16 +1053,16 @@
             
             <div class="hero-features">
                 <div class="hero-feature">
-                    <span>🤖</span> AI-Powered Predictions
+                    <span><i class="fas fa-robot"></i></span> AI-Powered Predictions
                 </div>
                 <div class="hero-feature">
-                    <span>⚡</span> Real-Time Analysis
+                    <span><i class="fas fa-bolt"></i></span> Real-Time Analysis
                 </div>
                 <div class="hero-feature">
-                    <span>📊</span> 150+ Training Cases
+                    <span><i class="fas fa-chart-bar"></i></span> 150+ Training Cases
                 </div>
                 <div class="hero-feature">
-                    <span>🎯</span> ±1.2 Week Accuracy
+                    <span><i class="fas fa-bullseye"></i></span> ±1.2 Week Accuracy
                 </div>
             </div>
             
@@ -996,16 +1077,16 @@
             
             <!-- Recovery Planning -->
             <div class="card" id="recovery-planning">
-                <h2>🎯 AI Recovery Planning</h2>
+                <h2><i class="fas fa-bullseye"></i> AI Recovery Planning</h2>
                 
                 <h3>Select Your Clinic</h3>
                 <div class="clinic-options">
-                    <div class="clinic-card" onclick="selectClinic('small')">
+                    <div class="clinic-card" data-clinic="small" onclick="selectClinic('small')">
                         <h4>Solo Family Practice</h4>
                         <p>1 doctor, $320K revenue</p>
                         <p><strong>Operating Days: 48</strong></p>
                     </div>
-                    <div class="clinic-card" onclick="selectClinic('medium')">
+                    <div class="clinic-card" data-clinic="medium" onclick="selectClinic('medium')">
                         <h4>Metro Medical Group</h4>
                         <p>2-3 doctors, $780K revenue</p>
                         <p><strong>Operating Days: 55</strong></p>
@@ -1013,16 +1094,25 @@
                 </div>
                 
                 <h3>Select Attack Scenario</h3>
-                <div class="input-group">
-                    <label>Attack Type</label>
-                    <select id="attack-type" onchange="currentAttackType = this.value; console.log('Attack type changed to:', currentAttackType);">
-                        <option value="phishing">📧 Phishing Attack - Social engineering via email</option>
-                        <option value="ransomware" selected>🔒 Ransomware - Systems encrypted for ransom</option>
-                        <option value="data_breach">💔 Data Breach - Patient records compromised</option>
-                    </select>
+                <div class="attack-options">
+                    <div class="attack-card" data-attack="phishing" onclick="selectAttack('phishing')">
+                        <i class="fas fa-envelope attack-icon"></i>
+                        <h4>Phishing Attack</h4>
+                        <p>Social engineering via email</p>
+                    </div>
+                    <div class="attack-card" data-attack="ransomware" onclick="selectAttack('ransomware')">
+                        <i class="fas fa-lock attack-icon"></i>
+                        <h4>Ransomware</h4>
+                        <p>Systems encrypted for ransom</p>
+                    </div>
+                    <div class="attack-card" data-attack="data_breach" onclick="selectAttack('data_breach')">
+                        <i class="fas fa-exclamation-triangle attack-icon"></i>
+                        <h4>Data Breach</h4>
+                        <p>Patient records compromised</p>
+                    </div>
                 </div>
                 
-                <button class="btn-primary" onclick="generateRecovery()">🤖 Generate AI Recovery Plan</button>
+                <button class="btn-primary" onclick="generateRecovery()"><i class="fas fa-robot"></i> Generate AI Recovery Plan</button>
                 
                 <div id="recovery-results" style="margin-top: 32px; display: none;">
                     <div id="results-content">
@@ -1036,11 +1126,11 @@
 
             <!-- Financial Overview -->
             <div class="card" id="financial-assessment">
-                <h2>📊 Financial Impact Projection</h2>
+                <h2><i class="fas fa-chart-line"></i> Financial Impact Projection</h2>
                 
                 <div class="tab-buttons">
-                    <button class="tab-btn active" onclick="showTab('before')">📊 Current State</button>
-                    <button class="tab-btn" onclick="showTab('after')">💥 After Attack</button>
+                    <button class="tab-btn active" onclick="showTab('before')"><i class="fas fa-chart-bar"></i> Current State</button>
+                    <button class="tab-btn" onclick="showTab('after')"><i class="fas fa-exclamation-circle"></i> After Attack</button>
                 </div>
 
                 <!-- Attack Parameters -->
@@ -1093,7 +1183,7 @@
                         </div>
                         <div class="ai-message-box">
                             <div class="ai-header">
-                                <span class="ai-icon">🤖</span>
+                                <span class="ai-icon"><i class="fas fa-robot"></i></span>
                                 <span class="ai-title">AI Assistant Says...</span>
                             </div>
                             <div class="ai-content">
@@ -1124,7 +1214,7 @@
                         </div>
                         <div class="ai-message-box">
                             <div class="ai-header">
-                                <span class="ai-icon">🤖</span>
+                                <span class="ai-icon"><i class="fas fa-robot"></i></span>
                                 <span class="ai-title">AI Assistant Says...</span>
                             </div>
                             <div class="ai-content">
@@ -1149,14 +1239,14 @@
     <!-- Our Vision Section -->
     <div class="container">
         <div style="text-align: center; margin-bottom: 60px;">
-            <h2 style="font-size: 36px; color: #1f2937; margin-bottom: 24px;">🎯 Our Vision</h2>
+            <h2 style="font-size: 36px; color: #1f2937; margin-bottom: 24px;"><i class="fas fa-bullseye"></i> Our Vision</h2>
             <p style="font-size: 20px; color: #1f2937; max-width: 800px; margin: 0 auto; line-height: 1.6; font-weight: 500;">
                 Small healthcare practices are increasingly vulnerable to cyber attacks, yet they lack the resources and expertise to adequately prepare for and recover from these incidents. We believe that every clinic, regardless of size, deserves access to enterprise-level AI-powered cyber resilience tools that can predict recovery timelines and provide actionable financial planning to keep their doors open during the most challenging times.
             </p>
         </div>
         
         <div style="text-align: center; margin-top: 40px; padding: 40px; background: white; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.12);">
-            <h3 style="color: #1f2937; margin-bottom: 24px; font-size: 24px;">🚀 Transform Your Practice</h3>
+            <h3 style="color: #1f2937; margin-bottom: 24px; font-size: 24px;"><i class="fas fa-rocket"></i> Transform Your Practice</h3>
             <button class="btn-primary" onclick="scrollToDemo()" style="font-size: 18px; padding: 16px 32px;">
                 Try AI Platform
             </button>
@@ -1169,7 +1259,7 @@
         <div class="container">
             <div style="text-align: center;">
                 <div style="font-size: 24px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; color: #1f2937;">
-                    🛡️ ClinicShield
+                    <i class="fas fa-shield-alt"></i> ClinicShield
                 </div>
                 <p style="color: #6b7280; line-height: 1.6; max-width: 600px; margin: 0 auto;">
                     The first AI-powered cyber recovery platform built specifically for healthcare practices. 
@@ -1182,13 +1272,13 @@
     <!-- Floating AI Chatbot -->
     <div class="chatbot-container">
         <button class="chatbot-button" id="chatbotButton">
-            🤖
+            <i class="fas fa-robot"></i>
         </button>
         
         <div class="chatbot-window" id="chatbotWindow">
             <div class="chatbot-header">
                 <div class="chatbot-title">
-                    🤖 ClinicShield AI Assistant
+                    <i class="fas fa-robot"></i> ClinicShield AI Assistant
                 </div>
                 <button class="chatbot-close" id="chatbotClose">
                     ×
@@ -1197,14 +1287,14 @@
             
             <div class="chatbot-messages" id="chatbotMessages">
                 <div class="message bot">
-                    Hi! I'm your ClinicShield AI assistant. I can help you with questions about cyber recovery planning, our AI predictions, pricing, or anything else about protecting your clinic. How can I assist you today? 🛡️
+                    Hi! I'm your ClinicShield AI assistant. I can help you with questions about cyber recovery planning, our AI predictions, pricing, or anything else about protecting your clinic. How can I assist you today? <i class="fas fa-shield-alt"></i>
                 </div>
             </div>
             
             <div class="chatbot-input-container">
                 <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Ask me anything about ClinicShield..." maxlength="500">
                 <button class="chatbot-send" id="chatbotSend">
-                    ➤
+                    <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
         </div>
@@ -1412,6 +1502,12 @@
         // Initialize chatbot when page loads
         document.addEventListener('DOMContentLoaded', () => {
             new ClinicShieldChatbot();
+            
+            // Select default attack type (ransomware)
+            const defaultAttackCard = document.querySelector('[data-attack="ransomware"]');
+            if (defaultAttackCard) {
+                defaultAttackCard.classList.add('selected');
+            }
         });
 
         // Global variables
@@ -1614,8 +1710,11 @@
                 card.classList.remove('selected');
             });
             
-            // Add selection to clicked card
-            event.target.classList.add('selected');
+            // Add selection to the clicked card using data attribute
+            const selectedCard = document.querySelector(`[data-clinic="${clinicId}"]`);
+            if (selectedCard) {
+                selectedCard.classList.add('selected');
+            }
             
             // Update global state
             currentClinic = clinicData[clinicId];
@@ -1623,6 +1722,25 @@
             
             // Update before metrics
             updateBeforeMetrics();
+        }
+        
+        function selectAttack(attackId) {
+            console.log('Selecting attack type:', attackId);
+            
+            // Remove selection from all attack cards
+            document.querySelectorAll('.attack-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selection to the clicked card using data attribute
+            const selectedCard = document.querySelector(`[data-attack="${attackId}"]`);
+            if (selectedCard) {
+                selectedCard.classList.add('selected');
+            }
+            
+            // Update global state
+            currentAttackType = attackId;
+            console.log('Current attack type set to:', currentAttackType);
         }
         
         function updateBeforeMetrics() {
@@ -1674,7 +1792,7 @@
             document.getElementById('after-metrics').innerHTML = `
                 <div class="metric">
                     <div class="metric-value" style="color: #dc3545;">-$${Math.round(aiFinancialImpact.totalLoss/1000)}K</div>
-                    <div class="metric-label">🤖 AI Calculated Impact</div>
+                    <div class="metric-label"><i class="fas fa-robot"></i> AI Calculated Impact</div>
                 </div>
                 <div class="metric">
                     <div class="metric-value" style="color: #dc3545;">${daysLost} days</div>
@@ -1693,14 +1811,14 @@
             // Update results content
             document.getElementById('results-content').innerHTML = `
                 <div class="alert">
-                    <h3>🤖 AI Recovery Analysis</h3>
-                    <p><strong>🤖 AI Predicted Recovery Time:</strong> ${predictedWeeks} weeks</p>
+                    <h3><i class="fas fa-robot"></i> AI Recovery Analysis</h3>
+                    <p><strong><i class="fas fa-robot"></i> AI Predicted Recovery Time:</strong> ${predictedWeeks} weeks</p>
                     <p><strong>Attack Type:</strong> ${attackType.charAt(0).toUpperCase() + attackType.slice(1)}</p>
-                    <p><strong>🎯 AI Calculated Impact:</strong> $${aiFinancialImpact.totalLoss.toLocaleString()}</p>
+                    <p><strong><i class="fas fa-bullseye"></i> AI Calculated Impact:</strong> $${aiFinancialImpact.totalLoss.toLocaleString()}</p>
                     <p><strong>Impact Breakdown:</strong> ${aiFinancialImpact.breakdown}</p>
                     ${trainedModel ? `<p><strong>Model Accuracy:</strong> ±${trainedModel.model_stats.mae.toFixed(1)} weeks (MAE)</p>` : ''}
                     <br>
-                    <p><strong>🧠 AI Insights:</strong></p>
+                    <p><strong><i class="fas fa-brain"></i> AI Insights:</strong></p>
                     <ul style="margin-left: 20px;">
                         <li>Your clinic's operating runway drops from ${currentClinic.operatingDays} to ${newOperatingDays} days</li>
                         <li>${attackType === 'ransomware' ? 'Ransomware requires complex system recovery' : attackType === 'data_breach' ? 'Data breach needs extensive compliance work' : attackType === 'phishing' ? 'Phishing attacks are typically faster to recover from' : 'Malware cleanup requires thorough system analysis'}</li>
@@ -1807,7 +1925,7 @@
                                 afterLabel: function(context) {
                                     const phase = recoveryPhases[context.dataIndex];
                                     if (phase.milestone) {
-                                        return `🎯 ${phase.milestone}`;
+                                        return `<i class="fas fa-bullseye"></i> ${phase.milestone}`;
                                     }
                                     return phase.description;
                                 }
@@ -1852,7 +1970,7 @@
             phases.push({
                 week: 'Week 0',
                 progress: 0,
-                description: `🚨 ${attackType.charAt(0).toUpperCase() + attackType.slice(1)} attack detected`,
+                description: `<i class="fas fa-exclamation-triangle"></i> ${attackType.charAt(0).toUpperCase() + attackType.slice(1)} attack detected`,
                 milestone: 'Attack Detected'
             });
             
@@ -1863,7 +1981,7 @@
                 phases.push({
                     week: `Week ${currentWeek}`,
                     progress: Math.round(currentProgress),
-                    description: `🔍 Damage assessment and incident analysis`,
+                    description: `<i class="fas fa-search"></i> Damage assessment and incident analysis`,
                     milestone: i === profile.assessmentWeeks ? 'Assessment Complete' : null
                 });
             }
@@ -1875,7 +1993,7 @@
                 phases.push({
                     week: `Week ${currentWeek}`,
                     progress: Math.round(currentProgress),
-                    description: `🛡️ Threat containment and system isolation`,
+                    description: `<i class="fas fa-shield-alt"></i> Threat containment and system isolation`,
                     milestone: i === profile.containmentWeeks ? 'Threat Contained' : null
                 });
             }
@@ -1887,7 +2005,7 @@
                 phases.push({
                     week: `Week ${currentWeek}`,
                     progress: Math.round(currentProgress),
-                    description: `🔧 System restoration and data recovery`,
+                    description: `<i class="fas fa-tools"></i> System restoration and data recovery`,
                     milestone: i === profile.recoveryWeeks ? 'Systems Restored' : null
                 });
             }
@@ -1899,7 +2017,7 @@
                 phases.push({
                     week: `Week ${currentWeek}`,
                     progress: Math.round(currentProgress),
-                    description: `✅ Full operations restored and monitoring`,
+                    description: `<i class="fas fa-check-circle"></i> Full operations restored and monitoring`,
                     milestone: i === profile.fullRecoveryWeeks ? 'Full Recovery' : null
                 });
             }
