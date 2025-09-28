@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ClinicShield - Enterprise Cyber Recovery Platform</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -341,6 +342,14 @@
             margin: 32px 0;
         }
         
+        /* Attack Type Cards */
+        .attack-options { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr 1fr; 
+            gap: 16px; 
+            margin: 24px 0;
+        }
+        
         .clinic-card { 
             border: 2px solid #e1e5e9; 
             padding: 32px; 
@@ -382,6 +391,77 @@
         
         .clinic-card.selected::before {
             transform: scaleX(1);
+        }
+        
+        /* Attack Type Cards */
+        .attack-card { 
+            border: 2px solid #e1e5e9; 
+            padding: 20px 16px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            transition: all 0.3s;
+            background: white;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .attack-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #9ebdf7, #7bb3f5);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+        
+        .attack-card:hover { 
+            border-color: #9ebdf7; 
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(158, 189, 247, 0.15);
+        }
+        
+        .attack-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .attack-card.selected { 
+            border-color: #9ebdf7; 
+            background: rgba(158, 189, 247, 0.05);
+            box-shadow: 0 4px 16px rgba(158, 189, 247, 0.15);
+        }
+        
+        .attack-card.selected::before {
+            transform: scaleX(1);
+        }
+        
+        .attack-card .attack-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            display: block;
+            color: #6b7280;
+        }
+        
+        .attack-card h4 {
+            font-size: 16px;
+            margin-bottom: 6px;
+            color: #131a22;
+            font-weight: 600;
+        }
+        
+        .attack-card p {
+            color: #565959;
+            margin-bottom: 0;
+            font-size: 13px;
+            line-height: 1.3;
         }
         
         .clinic-card h4 {
@@ -445,17 +525,77 @@
         
         .input-group select { 
             width: 100%; 
-            padding: 16px 20px; 
+            padding: 16px 50px 16px 20px; 
             border: 2px solid #e1e5e9; 
             border-radius: 12px;
             font-size: 16px;
-            background: white;
-            transition: all 0.2s;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+            position: relative;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 20px;
+            font-weight: 500;
+            color: #1f2937;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+        }
+        
+        .input-group select:hover {
+            border-color: #9ebdf7;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 12px rgba(158, 189, 247, 0.15), 0 2px 4px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+            transform: translateY(-1px);
         }
         
         .input-group select:focus {
             border-color: #9ebdf7;
+            background: rgba(255, 255, 255, 1);
             outline: none;
+            box-shadow: 0 0 0 3px rgba(158, 189, 247, 0.2), 0 4px 16px rgba(158, 189, 247, 0.15), 0 2px 4px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+            transform: translateY(-1px);
+        }
+        
+        .input-group select option {
+            padding: 14px 18px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #1f2937;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(225, 229, 233, 0.3);
+            border-radius: 8px;
+            margin: 3px 0;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .input-group select option:hover {
+            background: rgba(158, 189, 247, 0.12);
+            color: #1f2937;
+            border-color: rgba(158, 189, 247, 0.3);
+            transform: translateX(2px);
+            box-shadow: 0 2px 8px rgba(158, 189, 247, 0.15);
+        }
+        
+        .input-group select option:checked {
+            background: linear-gradient(135deg, rgba(158, 189, 247, 0.2) 0%, rgba(123, 179, 245, 0.15) 100%);
+            color: #1f2937;
+            font-weight: 600;
+            border-color: rgba(158, 189, 247, 0.4);
+            box-shadow: 0 2px 8px rgba(158, 189, 247, 0.2);
+        }
+        
+        .input-group select option:focus {
+            background: rgba(158, 189, 247, 0.15);
+            outline: none;
+            border-color: rgba(158, 189, 247, 0.5);
             box-shadow: 0 0 0 2px rgba(158, 189, 247, 0.2);
         }
         
@@ -753,6 +893,7 @@
             .hero-subtitle { font-size: 20px; }
             .hero-features { flex-direction: column; gap: 20px; }
             .clinic-options { grid-template-columns: 1fr; }
+            .attack-options { grid-template-columns: 1fr; }
             .header-content { flex-direction: column; gap: 20px; }
             .nav-links { gap: 20px; }
         }
@@ -763,7 +904,7 @@
     <header class="amazon-header">
         <div class="header-content">
             <div class="logo">
-                🛡️ ClinicShield
+                <i class="fas fa-shield-alt"></i> ClinicShield
             </div>
             <nav class="nav-links">
                 <a href="#recovery-planning" onclick="scrollToSection('recovery-planning')">Recovery Planning</a>
@@ -791,16 +932,16 @@
             
             <div class="hero-features">
                 <div class="hero-feature">
-                    <span>🤖</span> AI-Powered Predictions
+                    <span><i class="fas fa-robot"></i></span> AI-Powered Predictions
                 </div>
                 <div class="hero-feature">
-                    <span>⚡</span> Real-Time Analysis
+                    <span><i class="fas fa-bolt"></i></span> Real-Time Analysis
                 </div>
                 <div class="hero-feature">
-                    <span>📊</span> 150+ Training Cases
+                    <span><i class="fas fa-chart-bar"></i></span> 150+ Training Cases
                 </div>
                 <div class="hero-feature">
-                    <span>🎯</span> ±1.2 Week Accuracy
+                    <span><i class="fas fa-bullseye"></i></span> ±1.2 Week Accuracy
                 </div>
             </div>
             
@@ -815,16 +956,16 @@
             
             <!-- Recovery Planning -->
             <div class="card" id="recovery-planning">
-                <h2>🎯 AI Recovery Planning</h2>
+                <h2><i class="fas fa-bullseye"></i> AI Recovery Planning</h2>
                 
                 <h3>Select Your Clinic</h3>
                 <div class="clinic-options">
-                    <div class="clinic-card" onclick="selectClinic('small')">
+                    <div class="clinic-card" data-clinic="small" onclick="selectClinic('small')">
                         <h4>Solo Family Practice</h4>
                         <p>1 doctor, $320K revenue</p>
                         <p><strong>Operating Days: 48</strong></p>
                     </div>
-                    <div class="clinic-card" onclick="selectClinic('medium')">
+                    <div class="clinic-card" data-clinic="medium" onclick="selectClinic('medium')">
                         <h4>Metro Medical Group</h4>
                         <p>2-3 doctors, $780K revenue</p>
                         <p><strong>Operating Days: 55</strong></p>
@@ -832,16 +973,25 @@
                 </div>
                 
                 <h3>Select Attack Scenario</h3>
-                <div class="input-group">
-                    <label>Attack Type</label>
-                    <select id="attack-type">
-                        <option value="phishing">📧 Phishing Attack - Social engineering via email</option>
-                        <option value="ransomware" selected>🔒 Ransomware - Systems encrypted for ransom</option>
-                        <option value="data_breach">💔 Data Breach - Patient records compromised</option>
-                    </select>
+                <div class="attack-options">
+                    <div class="attack-card" data-attack="phishing" onclick="selectAttack('phishing')">
+                        <i class="fas fa-envelope attack-icon"></i>
+                        <h4>Phishing Attack</h4>
+                        <p>Social engineering via email</p>
+                    </div>
+                    <div class="attack-card" data-attack="ransomware" onclick="selectAttack('ransomware')">
+                        <i class="fas fa-lock attack-icon"></i>
+                        <h4>Ransomware</h4>
+                        <p>Systems encrypted for ransom</p>
+                    </div>
+                    <div class="attack-card" data-attack="data_breach" onclick="selectAttack('data_breach')">
+                        <i class="fas fa-exclamation-triangle attack-icon"></i>
+                        <h4>Data Breach</h4>
+                        <p>Patient records compromised</p>
+                    </div>
                 </div>
                 
-                <button class="btn-primary" onclick="generateRecovery()">🤖 Generate AI Recovery Plan</button>
+                <button class="btn-primary" onclick="generateRecovery()"><i class="fas fa-robot"></i> Generate AI Recovery Plan</button>
                 
                 <div id="recovery-results" style="margin-top: 32px; display: none;">
                     <div id="results-content">
@@ -855,11 +1005,11 @@
 
             <!-- Financial Overview -->
             <div class="card" id="financial-assessment">
-                <h2>📊 Financial Impact Assessment</h2>
+                <h2><i class="fas fa-chart-line"></i> Financial Impact Assessment</h2>
                 
                 <div class="tab-buttons">
-                    <button class="tab-btn active" onclick="showTab('before')">📊 Current State</button>
-                    <button class="tab-btn" onclick="showTab('after')">💥 After Attack</button>
+                    <button class="tab-btn active" onclick="showTab('before')"><i class="fas fa-chart-bar"></i> Current State</button>
+                    <button class="tab-btn" onclick="showTab('after')"><i class="fas fa-exclamation-circle"></i> After Attack</button>
                 </div>
                 
                 <div id="tab-before" class="tab-content active">
@@ -895,14 +1045,14 @@
     <!-- Our Vision Section -->
     <div class="container">
         <div style="text-align: center; margin-bottom: 60px;">
-            <h2 style="font-size: 36px; color: #1f2937; margin-bottom: 24px;">🎯 Our Vision</h2>
+            <h2 style="font-size: 36px; color: #1f2937; margin-bottom: 24px;"><i class="fas fa-bullseye"></i> Our Vision</h2>
             <p style="font-size: 20px; color: #1f2937; max-width: 800px; margin: 0 auto; line-height: 1.6; font-weight: 500;">
                 Small healthcare practices are increasingly vulnerable to cyber attacks, yet they lack the resources and expertise to adequately prepare for and recover from these incidents. We believe that every clinic, regardless of size, deserves access to enterprise-level AI-powered cyber resilience tools that can predict recovery timelines and provide actionable financial planning to keep their doors open during the most challenging times.
             </p>
         </div>
         
         <div style="text-align: center; margin-top: 40px; padding: 40px; background: white; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.12);">
-            <h3 style="color: #1f2937; margin-bottom: 24px; font-size: 24px;">🚀 Transform Your Practice</h3>
+            <h3 style="color: #1f2937; margin-bottom: 24px; font-size: 24px;"><i class="fas fa-rocket"></i> Transform Your Practice</h3>
             <button class="btn-primary" onclick="scrollToDemo()" style="font-size: 18px; padding: 16px 32px;">
                 Try AI Platform
             </button>
@@ -915,7 +1065,7 @@
         <div class="container">
             <div style="text-align: center;">
                 <div style="font-size: 24px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; color: #1f2937;">
-                    🛡️ ClinicShield
+                    <i class="fas fa-shield-alt"></i> ClinicShield
                 </div>
                 <p style="color: #6b7280; line-height: 1.6; max-width: 600px; margin: 0 auto;">
                     The first AI-powered cyber recovery platform built specifically for healthcare practices. 
@@ -928,13 +1078,13 @@
     <!-- Floating AI Chatbot -->
     <div class="chatbot-container">
         <button class="chatbot-button" id="chatbotButton">
-            🤖
+            <i class="fas fa-robot"></i>
         </button>
         
         <div class="chatbot-window" id="chatbotWindow">
             <div class="chatbot-header">
                 <div class="chatbot-title">
-                    🤖 ClinicShield AI Assistant
+                    <i class="fas fa-robot"></i> ClinicShield AI Assistant
                 </div>
                 <button class="chatbot-close" id="chatbotClose">
                     ×
@@ -943,14 +1093,14 @@
             
             <div class="chatbot-messages" id="chatbotMessages">
                 <div class="message bot">
-                    Hi! I'm your ClinicShield AI assistant. I can help you with questions about cyber recovery planning, our AI predictions, pricing, or anything else about protecting your clinic. How can I assist you today? 🛡️
+                    Hi! I'm your ClinicShield AI assistant. I can help you with questions about cyber recovery planning, our AI predictions, pricing, or anything else about protecting your clinic. How can I assist you today? <i class="fas fa-shield-alt"></i>
                 </div>
             </div>
             
             <div class="chatbot-input-container">
                 <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Ask me anything about ClinicShield..." maxlength="500">
                 <button class="chatbot-send" id="chatbotSend">
-                    ➤
+                    <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
         </div>
@@ -1162,6 +1312,7 @@
 
         // Global variables
         let currentClinic = null;
+        let currentAttackType = 'ransomware'; // Default selection
         let recoveryChart = null;
         let trainedModel = null;
         
@@ -1337,8 +1488,11 @@
                 card.classList.remove('selected');
             });
             
-            // Add selection to clicked card
-            event.target.classList.add('selected');
+            // Add selection to the clicked card using data attribute
+            const selectedCard = document.querySelector(`[data-clinic="${clinicId}"]`);
+            if (selectedCard) {
+                selectedCard.classList.add('selected');
+            }
             
             // Update global state
             currentClinic = clinicData[clinicId];
@@ -1346,6 +1500,25 @@
             
             // Update before metrics
             updateBeforeMetrics();
+        }
+        
+        function selectAttack(attackId) {
+            console.log('Selecting attack type:', attackId);
+            
+            // Remove selection from all attack cards
+            document.querySelectorAll('.attack-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selection to the clicked card using data attribute
+            const selectedCard = document.querySelector(`[data-attack="${attackId}"]`);
+            if (selectedCard) {
+                selectedCard.classList.add('selected');
+            }
+            
+            // Update global state
+            currentAttackType = attackId;
+            console.log('Current attack type set to:', currentAttackType);
         }
         
         function updateBeforeMetrics() {
@@ -1379,7 +1552,7 @@
                 return;
             }
             
-            const attackType = document.getElementById('attack-type').value;
+            const attackType = currentAttackType;
             
             // AI automatically calculates financial impact based on attack type and clinic size
             const aiFinancialImpact = calculateAIFinancialImpact(currentClinic, attackType);
@@ -1447,50 +1620,210 @@
                 recoveryChart.destroy();
             }
             
-            const labels = [];
-            const data = [];
+            // Generate realistic recovery phases based on attack type and clinic characteristics
+            const attackType = currentAttackType;
+            const recoveryPhases = generateRecoveryPhases(weeks, attackType, currentClinic);
             
-            for (let i = 1; i <= weeks; i++) {
-                labels.push(`Week ${i}`);
-                const recovery = Math.min(100, (i / weeks) * 100);
-                data.push(recovery);
-            }
+            const labels = recoveryPhases.map(phase => phase.week);
+            const progressData = recoveryPhases.map(phase => phase.progress);
+            const milestoneData = recoveryPhases.map(phase => phase.milestone ? phase.progress : null);
             
             recoveryChart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
-                    datasets: [{
-                        label: 'Recovery Progress (%)',
-                        data: data,
-                        borderColor: '#007bff',
-                        backgroundColor: 'rgba(0, 123, 255, 0.1)',
-                        borderWidth: 3,
-                        fill: true,
-                        tension: 0.4
-                    }]
+                    datasets: [
+                        {
+                            label: 'Recovery Progress (%)',
+                            data: progressData,
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 4,
+                            pointHoverRadius: 6
+                        },
+                        {
+                            label: 'Key Milestones',
+                            data: milestoneData,
+                            borderColor: '#f59e0b',
+                            backgroundColor: '#f59e0b',
+                            borderWidth: 0,
+                            pointRadius: 8,
+                            pointHoverRadius: 10,
+                            pointStyle: 'triangle',
+                            showLine: false
+                        }
+                    ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    },
                     scales: {
                         y: {
                             beginAtZero: true,
                             max: 100,
                             title: {
                                 display: true,
-                                text: 'Recovery Progress (%)'
+                                text: 'Recovery Progress (%)',
+                                font: { size: 14, weight: 'bold' }
+                            },
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Recovery Timeline',
+                                font: { size: 14, weight: 'bold' }
+                            },
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
                             }
                         }
                     },
                     plugins: {
                         title: {
                             display: true,
-                            text: 'AI-Predicted Recovery Timeline'
+                            text: `AI-Predicted Recovery Timeline (${weeks} weeks)`,
+                            font: { size: 16, weight: 'bold' }
+                        },
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                afterLabel: function(context) {
+                                    const phase = recoveryPhases[context.dataIndex];
+                                    if (phase.milestone) {
+                                        return `🎯 ${phase.milestone}`;
+                                    }
+                                    return phase.description;
+                                }
+                            }
                         }
                     }
                 }
             });
+        }
+        
+        function generateRecoveryPhases(totalWeeks, attackType, clinic) {
+            const phases = [];
+            const attackProfiles = {
+                'phishing': {
+                    initialImpact: 20,
+                    assessmentWeeks: 1,
+                    containmentWeeks: 1,
+                    recoveryWeeks: 2,
+                    fullRecoveryWeeks: 1
+                },
+                'ransomware': {
+                    initialImpact: 5,
+                    assessmentWeeks: 2,
+                    containmentWeeks: 2,
+                    recoveryWeeks: 4,
+                    fullRecoveryWeeks: 2
+                },
+                'data_breach': {
+                    initialImpact: 15,
+                    assessmentWeeks: 1,
+                    containmentWeeks: 2,
+                    recoveryWeeks: 3,
+                    fullRecoveryWeeks: 2
+                }
+            };
+            
+            const profile = attackProfiles[attackType] || attackProfiles['phishing'];
+            let currentWeek = 0;
+            let currentProgress = profile.initialImpact;
+            
+            // Week 0 - Initial Impact
+            phases.push({
+                week: 'Week 0',
+                progress: 0,
+                description: `🚨 ${attackType.charAt(0).toUpperCase() + attackType.slice(1)} attack detected`,
+                milestone: 'Attack Detected'
+            });
+            
+            // Assessment Phase
+            for (let i = 1; i <= profile.assessmentWeeks; i++) {
+                currentWeek++;
+                currentProgress = profile.initialImpact + (i / profile.assessmentWeeks) * 15;
+                phases.push({
+                    week: `Week ${currentWeek}`,
+                    progress: Math.round(currentProgress),
+                    description: `🔍 Damage assessment and incident analysis`,
+                    milestone: i === profile.assessmentWeeks ? 'Assessment Complete' : null
+                });
+            }
+            
+            // Containment Phase
+            for (let i = 1; i <= profile.containmentWeeks; i++) {
+                currentWeek++;
+                currentProgress = 35 + (i / profile.containmentWeeks) * 20;
+                phases.push({
+                    week: `Week ${currentWeek}`,
+                    progress: Math.round(currentProgress),
+                    description: `🛡️ Threat containment and system isolation`,
+                    milestone: i === profile.containmentWeeks ? 'Threat Contained' : null
+                });
+            }
+            
+            // Recovery Phase
+            for (let i = 1; i <= profile.recoveryWeeks; i++) {
+                currentWeek++;
+                currentProgress = 55 + (i / profile.recoveryWeeks) * 30;
+                phases.push({
+                    week: `Week ${currentWeek}`,
+                    progress: Math.round(currentProgress),
+                    description: `🔧 System restoration and data recovery`,
+                    milestone: i === profile.recoveryWeeks ? 'Systems Restored' : null
+                });
+            }
+            
+            // Full Recovery Phase
+            for (let i = 1; i <= profile.fullRecoveryWeeks; i++) {
+                currentWeek++;
+                currentProgress = 85 + (i / profile.fullRecoveryWeeks) * 15;
+                phases.push({
+                    week: `Week ${currentWeek}`,
+                    progress: Math.round(currentProgress),
+                    description: `✅ Full operations restored and monitoring`,
+                    milestone: i === profile.fullRecoveryWeeks ? 'Full Recovery' : null
+                });
+            }
+            
+            // Adjust for clinic size and security posture
+            const sizeMultiplier = clinic.monthlyRevenue > 80000 ? 1.1 : clinic.monthlyRevenue < 35000 ? 0.9 : 1.0;
+            const hasBackup = clinic.monthlyRevenue > 50000;
+            const hasIncidentPlan = clinic.monthlyRevenue > 80000;
+            
+            if (hasBackup) {
+                // Reduce recovery time by 20%
+                phases.forEach(phase => {
+                    if (phase.progress > 50) {
+                        phase.progress = Math.min(100, phase.progress + 10);
+                    }
+                });
+            }
+            
+            if (hasIncidentPlan) {
+                // Reduce assessment time
+                phases.forEach(phase => {
+                    if (phase.progress < 40) {
+                        phase.progress = Math.min(40, phase.progress + 5);
+                    }
+                });
+            }
+            
+            return phases;
         }
         
         // Scroll to demo function
@@ -1503,6 +1836,15 @@
         
         // Load the trained ML model
         loadTrainedModel();
+        
+        // Initialize default attack type selection
+        document.addEventListener('DOMContentLoaded', () => {
+            // Select default attack type (ransomware)
+            const defaultAttackCard = document.querySelector('[data-attack="ransomware"]');
+            if (defaultAttackCard) {
+                defaultAttackCard.classList.add('selected');
+            }
+        });
         
         // Test function
         window.testApp = function() {
