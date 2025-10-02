@@ -302,15 +302,6 @@ Platform approach works for any small healthcare business
 
 ---
 
-## 🤝 Built With ❤️ for HackGT12
-
-**Team**: [Keerthi Surisetty](https://github.com/keerthisurisetty)  
-**Track**: Healthcare Technology Innovation  
-**Problem**: Financial vulnerability of small clinics to cyber threats  
-**Innovation**: Proactive financial resilience platform vs reactive insurance
-
----
-
 > _"60% of small clinics close after cyberattacks. We're here to change that statistic."_
 
 **[📺 Live Demo](http://localhost:8000/clinic-resilience.html)** | **[🐙 GitHub](https://github.com/keerthisurisetty/hackgt12)** | **[📧 Contact](mailto:your-email@example.com)**
